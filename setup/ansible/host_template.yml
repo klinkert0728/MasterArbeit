@@ -1,0 +1,17 @@
+-
+    #35.195.32.75  ansible_connection=ssh
+    [micro_benchmark]
+     {{VM_MICRO_IP}} ansible_connection=ssh
+
+    [micro_benchmark:vars]
+     ansible_user=benchUser
+     ansible_ssh_private_key_file=./bench_dk_id_rsa
+     victoria_metrics_data_path=./vm_data
+
+    [application_benchmark]
+     {{VM_APPLICATION_IP}} ansible_connection=ssh
+
+    [application_benchmark:vars]
+     ansible_user=benchUser
+     ansible_ssh_private_key_file=./bench_dk_id_rsa
+     victoria_metrics_data_path=./vm_data

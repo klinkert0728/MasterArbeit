@@ -1,0 +1,20 @@
+---
+    - name: Install VM 
+      hosts: micro_benchmark, application_benchmark
+      remote_user: benchUser
+      become: yes
+      tasks:
+        - name: update
+          command: sudo apt -y update
+
+        - name: install gnup
+          command: sudo apt-get -y install gnupg
+        
+        - name: pull victoria metrics docker image
+          shell: docker pull victoriametrics/victoria-metrics
+
+        - name: create data directory
+          shell: mkdir -p vm_data
+
+        - name: run victoria metrics
+          shell: docker run -d -it --rm -v {{ victoria_metrics_data_path }} -p 8428:8428 victoriametrics/victoria-metrics
