@@ -23,3 +23,10 @@ go.work.sum
 
 # env file
 .env
+
+hosts.yml
+bench_dk_id_rsa
+bench_dk_id_rsa.pub
+**/*id_rsa*
+.DS_Store
+.idea
