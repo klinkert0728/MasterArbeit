@@ -14,7 +14,6 @@ VM_APPLICATION_IP=($(gcloud compute instances list --filter="tags.items=vm-appli
 # Pass the ips to teh host file to replace the template file.
 ./setup/configureHostFile.sh $VM_MICRO_IP $VM_APPLICATION_IP
 
-
 # Copy mongo config to VM_MICRO_IP.
 scp -i "./$keypair_file" -o StrictHostKeyChecking=no ./setup/ansible/configure_nginx $keypair_name@$VM_APPLICATION_IP:~/
 

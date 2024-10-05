@@ -1,0 +1,18 @@
+# go-setup-playbook.yml
+---
+- name: Setup nginx
+  hosts: application_benchmark
+  remote_user: benchUser
+  become: yes  
+  tasks:
+    - name: Install nginx
+      command: sudo apt-get install nginx -y
+ 
+    - name: replace default nginx config
+      shell: |
+        ls
+        sudo mv ./configure_nginx /etc/nginx/sites-available/default
+        sudo cat /etc/nginx/sites-available/default
+
+    - name: restart nginx
+      command: sudo systemctl restart nginx

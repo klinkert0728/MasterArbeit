@@ -61,6 +61,9 @@
     - name: install go
       import_playbook: configure_go.yml
 
+    - name: configure nginx
+      import_playbook: configure_nginx.yml
+
     # - name: install tsbs
     #   hosts: application_benchmark
     #   remote_user: benchUser
