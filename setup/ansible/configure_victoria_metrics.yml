@@ -1,6 +1,6 @@
 ---
     - name: Install VM 
-      hosts: micro_benchmark, application_benchmark
+      hosts: application_benchmark
       remote_user: benchUser
       become: yes
       tasks:

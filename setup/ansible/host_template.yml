@@ -15,3 +15,12 @@
      ansible_user=benchUser
      ansible_ssh_private_key_file=./bench_dk_id_rsa
      victoria_metrics_data_path=./vm_data
+
+    [application_benchmark_client]
+     {{VM_APPLICATION_CLIENT_IP}} ansible_connection=ssh
+
+    [application_benchmark_client:vars]
+     ansible_user=benchUser
+     ansible_ssh_private_key_file=./bench_dk_id_rsa
+     target_sut_ip={{VM_APPLICATION_IP}}
+     

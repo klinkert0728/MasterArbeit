@@ -1,0 +1,32 @@
+---
+  - name: Initial config
+    hosts: micro_benchmark, application_benchmark, application_benchmark_client
+    remote_user: benchUser
+    become: yes
+    tasks:
+      - name: update
+        command: sudo apt -y update
+
+      - name: install git
+        command: sudo apt install git -y
+      
+      - name: install curl
+        command: sudo apt install curl -y
+
+      - name: install pip
+        command: sudo apt install python3-pip -y
+
+      - name: update
+        command: sudo apt -y update
+
+  - name: Install docker
+    import_playbook: configure_docker.yml
+
+  - name: install go
+    import_playbook: configure_go.yml
+
+  - name: configure nginx
+    import_playbook: configure_nginx.yml
+  
+  - name: configure victoria metrics
+    import_playbook: configure_victoria_metrics.yml

@@ -1,7 +1,7 @@
 # go-setup-playbook.yml
 ---
 - name: Go Setup
-  hosts: micro_benchmark, application_benchmark
+  hosts: micro_benchmark, application_benchmark, application_benchmark_client
   remote_user: benchUser
   vars:
      - version: 1.23.2
