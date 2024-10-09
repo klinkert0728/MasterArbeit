@@ -22,5 +22,5 @@
     [application_benchmark_client:vars]
      ansible_user=benchUser
      ansible_ssh_private_key_file=./bench_dk_id_rsa
-     target_sut_ip={{VM_APPLICATION_IP}}
+     target_sut_ip={{VM_APPLICATION_IP}}:8428
      

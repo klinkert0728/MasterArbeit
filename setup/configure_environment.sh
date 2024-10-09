@@ -18,5 +18,6 @@ VM_APPLICATION_CLIENT_IP=($(gcloud compute instances list --filter="tags.items=v
 
 # Copy mongo config to VM_MICRO_IP.
 scp -i "./$keypair_file" -o StrictHostKeyChecking=no ./setup/ansible/configure_nginx $keypair_name@$VM_APPLICATION_IP:~/
+scp -i "./$keypair_file" -o StrictHostKeyChecking=no ./setup/scripts/configure_tsbs.sh $keypair_name@$VM_APPLICATION_CLIENT_IP:~/
 
 ansible-playbook -i hosts.yml setup/ansible/configure_gcp_instances.yml --ssh-common-args='-o StrictHostKeyChecking=no'

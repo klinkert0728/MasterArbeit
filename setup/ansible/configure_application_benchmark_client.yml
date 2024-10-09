@@ -1,0 +1,20 @@
+# go-setup-playbook.yml
+---
+- name: Application Benchmark client Setup
+  hosts: application_benchmark_client
+  remote_user: benchUser
+  tasks:
+    - name: Clone TSBS repository.
+      command: git clone https://github.com/timescale/tsbs.git
+
+    - name: setup benchmark tool
+      shell: |
+        source ~/.profile
+        go version
+        ./configure_tsbs.sh '{{ target_sut_ip }}'
+
+      register: ps
+      args:
+        executable: /bin/bash
+    
+    - debug: var=ps.stdout_lines
