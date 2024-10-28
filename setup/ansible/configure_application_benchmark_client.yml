@@ -11,7 +11,7 @@
       shell: |
         source ~/.profile
         go version
-        ./configure_tsbs.sh '{{ target_sut_ip }}'
+        ./configure_tsbs.sh '{{ SUT_IP_AND_PORT_LATEST }}' '{{ SUT_IP_AND_PORT_OTHER }}'
 
       register: ps
       args:

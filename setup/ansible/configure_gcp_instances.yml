@@ -24,9 +24,6 @@
 
   - name: install go
     import_playbook: configure_go.yml
-
-  - name: configure nginx
-    import_playbook: configure_nginx.yml
   
   - name: configure victoria metrics
     import_playbook: configure_victoria_metrics.yml
