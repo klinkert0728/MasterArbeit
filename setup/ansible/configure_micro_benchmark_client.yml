@@ -9,8 +9,6 @@
         source ~/.profile
         go version
         cd $HOME/GoABS && go install
-        export PATH=$PATH:~/go/bin
-        echo "PATH=$PATH" | sudo tee /etc/environment
         
       register: ps
       args:
@@ -19,6 +17,7 @@
 
     - name: clone sut
       shell: |
+        export PATH=$PATH:$HOME/go/bin
         cd $HOME
         git clone https://github.com/VictoriaMetrics/VictoriaMetrics.git latest
         git clone https://github.com/VictoriaMetrics/VictoriaMetrics.git other
