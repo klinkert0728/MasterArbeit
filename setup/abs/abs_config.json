@@ -1,0 +1,11 @@
+{
+	"project": "/home/benchUser/other",
+	"project2": "/home/benchUser/latest",
+	"dynamic": {
+		"bench_time": "1s",
+		"bench_timeout": "10s",
+		"i": 5,
+		"runs": 3,
+        "bench_regex": "Benchmark.*"
+	}
+}

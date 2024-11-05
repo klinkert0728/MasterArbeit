@@ -9,11 +9,11 @@ run=$1 # determines the experiment run number
 PROJECT=master-437610
 
 # set the primary name
-MICRO_BENMARK_INSTANCE_NAME=micro-sut-experiment-$run
+MICRO_BENCHMARK_INSTANCE_NAME=micro-sut-experiment-$run
 
-APPLICATION_BENMARK_INSTANCE_NAME=application-sut-experiment-$run
+APPLICATION_BENCHMARK_INSTANCE_NAME=application-sut-experiment-$run
 
-APPLICATION_BENMAR_CLIENT_INSTANCE_NAME=application-client-experiment-$run
+APPLICATION_BENCHMARK_CLIENT_INSTANCE_NAME=application-client-experiment-$run
 
 # define file name as id_rsa and id_rsa.pub
 keypair_file="bench_dk_id_rsa"
@@ -36,18 +36,16 @@ export CLOUDSDK_COMPUTE_ZONE="${CLOUDSDK_COMPUTE_REGION}-b"
 
 echo "starting instances..."
 # create microbenchmark instance sut
-gcloud compute instances create $MICRO_BENMARK_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-2 --create-disk=auto-delete=yes --tags=vm-micro,http-server,https-server
-gcloud compute instances add-metadata $MICRO_BENMARK_INSTANCE_NAME --zone=$CLOUDSDK_COMPUTE_ZONE --metadata-from-file ssh-keys="./id_rsa_formatted.pub"
+gcloud compute instances create $MICRO_BENCHMARK_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-2 --create-disk=auto-delete=yes --tags=vm-micro,http-server,https-server
+gcloud compute instances add-metadata $MICRO_BENCHMARK_INSTANCE_NAME --zone=$CLOUDSDK_COMPUTE_ZONE --metadata-from-file ssh-keys="./id_rsa_formatted.pub"
 
 #create application benchmark instance sut
-gcloud compute instances create $APPLICATION_BENMARK_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-2 --create-disk=auto-delete=yes --tags=vm-application,http-server,https-server
-gcloud compute instances add-metadata $APPLICATION_BENMARK_INSTANCE_NAME --zone=$CLOUDSDK_COMPUTE_ZONE --metadata-from-file ssh-keys="./id_rsa_formatted.pub"
-
+gcloud compute instances create $APPLICATION_BENCHMARK_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-2 --create-disk=auto-delete=yes --tags=vm-application,http-server,https-server
+gcloud compute instances add-metadata $APPLICATION_BENCHMARK_INSTANCE_NAME --zone=$CLOUDSDK_COMPUTE_ZONE --metadata-from-file ssh-keys="./id_rsa_formatted.pub"
 
 # create application benchmark client
-gcloud compute instances create $APPLICATION_BENMAR_CLIENT_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-8 --create-disk=auto-delete=yes --tags=vm-application-client,http-server,https-server
-gcloud compute instances add-metadata $APPLICATION_BENMAR_CLIENT_INSTANCE_NAME --zone=$CLOUDSDK_COMPUTE_ZONE --metadata-from-file ssh-keys="./id_rsa_formatted.pub"
-
+gcloud compute instances create $APPLICATION_BENCHMARK_CLIENT_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-8 --create-disk=auto-delete=yes,boot=yes,device-name=instance-20241102-174601,image=projects/debian-cloud/global/images/debian-12-bookworm-v20241009,mode=rw,size=50,type=pd-balanced --tags=vm-application-client,http-server,https-server
+gcloud compute instances add-metadata $APPLICATION_BENCHMARK_CLIENT_INSTANCE_NAME --zone=$CLOUDSDK_COMPUTE_ZONE --metadata-from-file ssh-keys="./id_rsa_formatted.pub"
 
 # add firewall rules for SSH, ICMP, victoria-metrics for all VMs
 if [ $(gcloud compute firewall-rules list --filter="name~allow-victoria-metrics-firewall" | grep -c allow-victoria-metrics-firewall) -eq 0 ]; then

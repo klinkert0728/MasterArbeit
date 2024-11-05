@@ -19,4 +19,6 @@ VM_APPLICATION_CLIENT_IP=($(gcloud compute instances list --filter="tags.items=v
 # Copy tsbs script to VM_APPLICATION_CLIENT_IP  .
 scp -i "./$keypair_file" -o StrictHostKeyChecking=no ./setup/scripts/configure_tsbs.sh $keypair_name@$VM_APPLICATION_CLIENT_IP:~/
 
+scp -i "./$keypair_file" -o StrictHostKeyChecking=no ./setup/abs/abs_config.json $keypair_name@$VM_MICRO_IP:~/
+
 ansible-playbook -i hosts.yml setup/ansible/configure_gcp_instances.yml --ssh-common-args='-o StrictHostKeyChecking=no'

@@ -1,0 +1,33 @@
+# go-setup-playbook.yml
+---
+- name: Microbenchmark client Setup
+  hosts: micro_benchmark
+  tasks:
+    - name: setup benchmark tool
+      shell: |
+        git clone https://github.com/martingrambow/GoABS.git $HOME/GoABS
+        source ~/.profile
+        go version
+        cd $HOME/GoABS && go install
+        export PATH=$PATH:~/go/bin
+        echo "PATH=$PATH" | sudo tee /etc/environment
+        
+      register: ps
+      args:
+        executable: /bin/bash
+    - debug: var=ps.stdout_lines
+
+    - name: clone sut
+      shell: |
+        cd $HOME
+        git clone https://github.com/VictoriaMetrics/VictoriaMetrics.git latest
+        git clone https://github.com/VictoriaMetrics/VictoriaMetrics.git other
+        cd other && git checkout {{ VICTORIA_METRICS_VERSION_OTHER }}
+        cd ~/
+        mkdir -p results
+        goabs -c $HOME/abs_config.json -d -o $HOME/results/microbenchmark.csv 
+
+      register: ps
+      args:
+        executable: /bin/bash
+    - debug: var=ps.stdout_lines

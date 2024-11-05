@@ -1,27 +1,23 @@
 -
     #35.195.32.75  ansible_connection=ssh
-    [micro_benchmark]
-     {{VM_MICRO_IP}} ansible_connection=ssh
-
-    [micro_benchmark:vars]
+    [all:vars]
+     VICTORIA_METRICS_VERSION_OTHER=v1.104.0
      ansible_user=benchUser
      ansible_ssh_private_key_file=./bench_dk_id_rsa
-     victoria_metrics_data_path=./vm_data
+
+    [micro_benchmark]
+     {{VM_MICRO_IP}} ansible_connection=ssh
 
     [application_benchmark]
      {{VM_APPLICATION_IP}} ansible_connection=ssh
 
     [application_benchmark:vars]
-     ansible_user=benchUser
-     ansible_ssh_private_key_file=./bench_dk_id_rsa
      victoria_metrics_data_path=./vm_data
 
     [application_benchmark_client]
      {{VM_APPLICATION_CLIENT_IP}} ansible_connection=ssh
 
     [application_benchmark_client:vars]
-     ansible_user=benchUser
-     ansible_ssh_private_key_file=./bench_dk_id_rsa
      SUT_IP_AND_PORT_LATEST={{VM_APPLICATION_IP}}:8428
      SUT_IP_AND_PORT_OTHER={{VM_APPLICATION_IP}}:8429
      
