@@ -9,24 +9,22 @@
         source ~/.profile
         go version
         cd $HOME/GoABS && go install
-        
-      register: ps
+      
       args:
         executable: /bin/bash
-    - debug: var=ps.stdout_lines
-
     - name: clone sut
       shell: |
-        export PATH=$PATH:$HOME/go/bin
+        source ~/.profile # make sure go is in the path.
         cd $HOME
         git clone https://github.com/VictoriaMetrics/VictoriaMetrics.git latest
-        git clone https://github.com/VictoriaMetrics/VictoriaMetrics.git other
+        cp -R latest other
         cd other && git checkout {{ VICTORIA_METRICS_VERSION_OTHER }}
+        cd .. && cd latest && git checkout {{ VICTORIA_METRICS_VERSION_LATEST }}
         cd ~/
         mkdir -p results
         goabs -c $HOME/abs_config.json -d -o $HOME/results/microbenchmark.csv 
-
-      register: ps
       args:
         executable: /bin/bash
-    - debug: var=ps.stdout_lines
+        
+- name: retrieve data from client
+  import_playbook: retrieve_data_microbenchmark.yml

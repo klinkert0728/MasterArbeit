@@ -1,0 +1,14 @@
+---
+    - name: Collect data from microbenchmark client
+      hosts: micro_benchmark
+      gather_facts: no
+      remote_user: benchUser
+      strategy: free
+      become: yes
+
+      tasks:      
+        - name: Collecting microbenchmark results
+          fetch: 
+            flat: yes
+            src: /home/benchUser/results/microbenchmark.csv
+            dest: ./results/{{RUN}}/

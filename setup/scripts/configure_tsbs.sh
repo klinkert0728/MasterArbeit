@@ -23,6 +23,7 @@ cd go/pkg/mod/github.com/loposkin/$tsbs_dirname/cmd
 cd tsbs_load_victoriametrics && go install
 cd ../tsbs_run_queries_victoriametrics && go install
 
+# export the path of the offial repository to generate data and queries.
 TSBS_PATH=~/go
 export PATH=$PATH:$TSBS_PATH/bin
 
@@ -46,8 +47,24 @@ loadData() {
     tsbs_load_victoriametrics --urls="http://$IP/write" --workers=10 --batch-size=100 --file="$HOME/data.txt" --latencies-file=/home/benchUser/results/latenciesInserts_${VERSION}.csv 2>&1 | tee $HOME/results/logInserts_${VERSION}.log 
 }
 
+# Start parallel data loading
+echo "Starting parallel data loading..."
 loadData $SUT_IP_AND_PORT_LATEST "latest" & 
-loadData $SUT_IP_AND_PORT_OTHER "other"
+LOAD_PID_1=$!
+echo "Latest load started with PID: $LOAD_PID_1"
+
+loadData $SUT_IP_AND_PORT_OTHER "other" &
+LOAD_PID_2=$!
+echo "Other load started with PID: $LOAD_PID_2"
+
+# Wait for both loads to complete
+echo "Waiting for data loading to complete (PIDs: $LOAD_PID_1 $LOAD_PID_2)..."
+wait $LOAD_PID_1 $LOAD_PID_2
+echo "Data loading completed"
+
+# Wait for systems to stabilize
+echo "Waiting for systems to stabilize..."
+sleep 60
 
 runBenchmark() {
     IP=$1
@@ -61,4 +78,13 @@ runBenchmark() {
 }
 
 runBenchmark $SUT_IP_AND_PORT_LATEST "latest" & 
+RUN_PID_1=$!
+echo "Latest run started with PID: $RUN_PID_1"
 runBenchmark $SUT_IP_AND_PORT_OTHER "other" &
+RUN_PID_2=$!
+echo "Other run started with PID: $RUN_PID_2"
+
+# Wait for both runs to complete
+echo "Waiting for runs to complete (PIDs: $RUN_PID_1 $RUN_PID_2)..."
+wait $RUN_PID_1 $RUN_PID_2
+echo "Runs completed"

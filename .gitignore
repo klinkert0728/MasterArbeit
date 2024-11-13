@@ -24,7 +24,8 @@ go.work.sum
 # env file
 .env
 
-hosts.yml
+hosts*.yml
+master-*.json
 bench_dk_id_rsa
 bench_dk_id_rsa.pub
 **/*id_rsa*

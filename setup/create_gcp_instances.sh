@@ -15,6 +15,8 @@ APPLICATION_BENCHMARK_INSTANCE_NAME=application-sut-experiment-$run
 
 APPLICATION_BENCHMARK_CLIENT_INSTANCE_NAME=application-client-experiment-$run
 
+CONTROLLER_INSTANCE_NAME=controller-experiment-$run
+
 # define file name as id_rsa and id_rsa.pub
 keypair_file="bench_dk_id_rsa"
 # define keypair name used as benchUser, be aware that if you change this user, you will need to change the remote_user in all plays for ansible
@@ -36,16 +38,20 @@ export CLOUDSDK_COMPUTE_ZONE="${CLOUDSDK_COMPUTE_REGION}-b"
 
 echo "starting instances..."
 # create microbenchmark instance sut
-gcloud compute instances create $MICRO_BENCHMARK_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-2 --create-disk=auto-delete=yes --tags=vm-micro,http-server,https-server
+gcloud compute instances create $MICRO_BENCHMARK_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-2 --create-disk=auto-delete=yes,size=50 --tags=vm-micro-$run,http-server,https-server
 gcloud compute instances add-metadata $MICRO_BENCHMARK_INSTANCE_NAME --zone=$CLOUDSDK_COMPUTE_ZONE --metadata-from-file ssh-keys="./id_rsa_formatted.pub"
 
 #create application benchmark instance sut
-gcloud compute instances create $APPLICATION_BENCHMARK_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-2 --create-disk=auto-delete=yes --tags=vm-application,http-server,https-server
+gcloud compute instances create $APPLICATION_BENCHMARK_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-2 --create-disk=auto-delete=yes,size=50 --tags=vm-application-$run,http-server,https-server
 gcloud compute instances add-metadata $APPLICATION_BENCHMARK_INSTANCE_NAME --zone=$CLOUDSDK_COMPUTE_ZONE --metadata-from-file ssh-keys="./id_rsa_formatted.pub"
 
 # create application benchmark client
-gcloud compute instances create $APPLICATION_BENCHMARK_CLIENT_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-8 --create-disk=auto-delete=yes,boot=yes,device-name=instance-20241102-174601,image=projects/debian-cloud/global/images/debian-12-bookworm-v20241009,mode=rw,size=50,type=pd-balanced --tags=vm-application-client,http-server,https-server
+gcloud compute instances create $APPLICATION_BENCHMARK_CLIENT_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-8 --create-disk=auto-delete=yes,boot=yes,device-name=instance-20241102-174601,image=projects/debian-cloud/global/images/debian-12-bookworm-v20241009,mode=rw,size=50,type=pd-balanced --tags=vm-application-client-$run,http-server,https-server
 gcloud compute instances add-metadata $APPLICATION_BENCHMARK_CLIENT_INSTANCE_NAME --zone=$CLOUDSDK_COMPUTE_ZONE --metadata-from-file ssh-keys="./id_rsa_formatted.pub"
+
+# # create controller
+gcloud compute instances create $CONTROLLER_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-medium --create-disk=auto-delete=yes,size=50 --tags=vm-controller-$run,http-server,https-server
+gcloud compute instances add-metadata $CONTROLLER_INSTANCE_NAME --zone=$CLOUDSDK_COMPUTE_ZONE --metadata-from-file ssh-keys="./id_rsa_formatted.pub"
 
 # add firewall rules for SSH, ICMP, victoria-metrics for all VMs
 if [ $(gcloud compute firewall-rules list --filter="name~allow-victoria-metrics-firewall" | grep -c allow-victoria-metrics-firewall) -eq 0 ]; then
@@ -58,4 +64,8 @@ echo "Wait for the instances to spin up"
 sleep 15
 
 # configure environment
-./setup/configure_environment.sh $keypair_name $keypair_file
+./setup/configure_environment.sh $keypair_name $keypair_file $run
+
+# delete instances
+# gcloud compute instances delete $MICRO_BENCHMARK_INSTANCE_NAME $APPLICATION_BENCHMARK_INSTANCE_NAME $APPLICATION_BENCHMARK_CLIENT_INSTANCE_NAME \
+#     --zone=$CLOUDSDK_COMPUTE_ZONE --quiet

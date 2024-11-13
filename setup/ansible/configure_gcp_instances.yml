@@ -1,6 +1,6 @@
 ---
   - name: Initial config
-    hosts: micro_benchmark, application_benchmark, application_benchmark_client
+    hosts: micro_benchmark, application_benchmark, application_benchmark_client, controller
     remote_user: benchUser
     become: yes
     tasks:
@@ -27,3 +27,6 @@
   
   - name: configure victoria metrics
     import_playbook: configure_victoria_metrics.yml
+
+  - name: configure controller
+    import_playbook: configure_controller.yml
