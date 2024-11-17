@@ -22,7 +22,7 @@
         cd .. && cd latest && git checkout {{ VICTORIA_METRICS_VERSION_LATEST }}
         cd ~/
         mkdir -p results
-        goabs -c $HOME/abs_config.json -d -o $HOME/results/microbenchmark.csv 
+        goabs -c $HOME/abs_config.json -d -o $HOME/results/microbenchmark.csv >> ~/results/logs.txt 2>&1
       args:
         executable: /bin/bash
         

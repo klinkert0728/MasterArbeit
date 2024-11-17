@@ -1,25 +1,24 @@
 ---
 - name: Configure controller
   hosts: controller
-
   tasks:
     - name: install ansible
       shell: |
          sudo apt update -y
          sudo apt install software-properties-common -y
          sudo apt install ansible -y
+         cd $HOME
+         mkdir results
 
-    # - name: Run ansible playbook
-    #   async: 45
-    #   poll: 0
-    #   shell: |
-    #      ansible-playbook -i hosts_$RUN.yml ./configure_gcp_instances.yml --ssh-common-args='-o StrictHostKeyChecking=no'
-    #      sleep 60
-    #      ansible-playbook -i hosts_$RUN.yml ./configure_micro_benchmark_client.yml --ssh-common-args='-o StrictHostKeyChecking=no' &
-    #      MICRO_PID_1=$!
-    #      ansible-playbook -i hosts_$RUN.yml ./configure_application_benchmark_client.yml --ssh-common-args='-o StrictHostKeyChecking=no' &
-    #      APPLICATION_PID_2=$!
-    #      wait $MICRO_PID_1 $APPLICATION_PID_2
+    - name: Creates an entry like
+      ansible.builtin.cron:
+        name: "a job for reboot"
+        special_time: reboot
+        job: "/home/benchUser/run_benchmark.sh >> ~/logs.txt 2>&1"
 
-    #   args:
-    #     executable: /bin/bash
+- name: reboot
+  hosts: controller
+  become: true
+  tasks:
+    - name: reboot
+      shell: sudo reboot

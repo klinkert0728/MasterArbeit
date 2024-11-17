@@ -6,9 +6,16 @@
       strategy: free
       become: yes
 
-      tasks:      
-        - name: Collecting microbenchmark results
-          fetch: 
-            flat: yes
-            src: /home/benchUser/results/microbenchmark.csv
+      tasks:  
+         - name: Find benchmark all results
+          find:
+            paths: /home/benchUser/results
+            patterns: "*"
+          register: log_files
+
+        - name: Collecting results from benchmark client
+          fetch:
+            flat: yes 
+            src: "{{ item.path }}"
             dest: ./results/{{RUN}}/
+          with_items: "{{ log_files.files }}"
