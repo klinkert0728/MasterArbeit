@@ -186,8 +186,74 @@ def plot_grouped_heatmaps(dataframe, group_size=10):
     #     plt.show()
 
 def main():
-    csv_file_paths = ['../setup/ansible/results/1/1-microbenchmark.csv', '../setup/ansible/results/2/2-microbenchmark.csv', '../setup/ansible/results/3/3-microbenchmark.csv', '../setup/ansible/results/4/4-microbenchmark.csv', '../setup/ansible/results/5/5-microbenchmark.csv', '../setup/ansible/results/6/6-microbenchmark.csv', '../setup/ansible/results/7/7-microbenchmark.csv']
-    log_file_paths = ['../setup/ansible/results/1/1-logInserts_other.log', '../setup/ansible/results/1/1-logInserts_latest.log', '../setup/ansible/results/2/2-logInserts_other.log', '../setup/ansible/results/2/2-logInserts_latest.log', '../setup/ansible/results/3/3-logInserts_other.log', '../setup/ansible/results/3/3-logInserts_latest.log', '../setup/ansible/results/4/4-logInserts_other.log', '../setup/ansible/results/4/4-logInserts_latest.log', '../setup/ansible/results/5/5-logInserts_other.log', '../setup/ansible/results/5/5-logInserts_latest.log', '../setup/ansible/results/6/6-logInserts_other.log', '../setup/ansible/results/6/6-logInserts_latest.log', '../setup/ansible/results/7/7-logInserts_other.log', '../setup/ansible/results/7/7-logInserts_latest.log']
+    csv_file_paths = [
+        '../setup/ansible/results/v104-v105/1/1-microbenchmark.csv', 
+        '../setup/ansible/results/v104-v105/2/2-microbenchmark.csv', 
+        '../setup/ansible/results/v104-v105/3/3-microbenchmark.csv',
+         '../setup/ansible/results/v104-v105/4/4-microbenchmark.csv', 
+         '../setup/ansible/results/v104-v105/5/5-microbenchmark.csv', 
+         '../setup/ansible/results/v104-v105/6/6-microbenchmark.csv', 
+         '../setup/ansible/results/v104-v105/7/7-microbenchmark.csv',
+         '../setup/ansible/results/v104-v105/8/8-microbenchmark.csv',
+         '../setup/ansible/results/v104-v105/9/9-microbenchmark.csv',
+         '../setup/ansible/results/v104-v105/10/10-microbenchmark.csv',
+
+         '../setup/ansible/results/v105-v106/11/11-microbenchmark.csv',
+         '../setup/ansible/results/v105-v106/12/12-microbenchmark.csv',
+         '../setup/ansible/results/v105-v106/13/13-microbenchmark.csv',
+         '../setup/ansible/results/v105-v106/14/14-microbenchmark.csv',
+         '../setup/ansible/results/v105-v106/15/15-microbenchmark.csv',
+         '../setup/ansible/results/v105-v106/16/16-microbenchmark.csv',
+         '../setup/ansible/results/v105-v106/17/17-microbenchmark.csv',
+         '../setup/ansible/results/v105-v106/18/18-microbenchmark.csv',
+         '../setup/ansible/results/v105-v106/19/19-microbenchmark.csv',
+         '../setup/ansible/results/v105-v106/20/20-microbenchmark.csv',
+    ]
+
+    log_file_paths = [
+        '../setup/ansible/results/v104-v105/1/1-logInserts_other.log', 
+        '../setup/ansible/results/v104-v105/1/1-logInserts_latest.log', 
+        '../setup/ansible/results/v104-v105/2/2-logInserts_other.log', 
+        '../setup/ansible/results/v104-v105/2/2-logInserts_latest.log', 
+        '../setup/ansible/results/v104-v105/3/3-logInserts_other.log', 
+        '../setup/ansible/results/v104-v105/3/3-logInserts_latest.log', 
+        '../setup/ansible/results/v104-v105/4/4-logInserts_other.log', 
+        '../setup/ansible/results/v104-v105/4/4-logInserts_latest.log', 
+        '../setup/ansible/results/v104-v105/5/5-logInserts_other.log', 
+        '../setup/ansible/results/v104-v105/5/5-logInserts_latest.log', 
+        '../setup/ansible/results/v104-v105/6/6-logInserts_other.log', 
+        '../setup/ansible/results/v104-v105/6/6-logInserts_latest.log', 
+        '../setup/ansible/results/v104-v105/7/7-logInserts_other.log', 
+        '../setup/ansible/results/v104-v105/7/7-logInserts_latest.log',
+        '../setup/ansible/results/v104-v105/8/8-logInserts_other.log',
+        '../setup/ansible/results/v104-v105/8/8-logInserts_latest.log',
+        '../setup/ansible/results/v104-v105/9/9-logInserts_other.log',
+        '../setup/ansible/results/v104-v105/9/9-logInserts_latest.log',
+        '../setup/ansible/results/v104-v105/10/10-logInserts_other.log',
+        '../setup/ansible/results/v104-v105/10/10-logInserts_latest.log',
+
+        '../setup/ansible/results/v105-v106/11/11-logInserts_other.log',
+        '../setup/ansible/results/v105-v106/11/11-logInserts_latest.log',
+        '../setup/ansible/results/v105-v106/12/12-logInserts_other.log',
+        '../setup/ansible/results/v105-v106/12/12-logInserts_latest.log',
+        '../setup/ansible/results/v105-v106/13/13-logInserts_other.log',
+        '../setup/ansible/results/v105-v106/13/13-logInserts_latest.log',
+        '../setup/ansible/results/v105-v106/14/14-logInserts_other.log',
+        '../setup/ansible/results/v105-v106/14/14-logInserts_latest.log',
+        '../setup/ansible/results/v105-v106/15/15-logInserts_other.log',
+        '../setup/ansible/results/v105-v106/15/15-logInserts_latest.log',
+        '../setup/ansible/results/v105-v106/16/16-logInserts_other.log',
+        '../setup/ansible/results/v105-v106/16/16-logInserts_latest.log',
+        '../setup/ansible/results/v105-v106/17/17-logInserts_other.log',
+        '../setup/ansible/results/v105-v106/17/17-logInserts_latest.log',
+        '../setup/ansible/results/v105-v106/18/18-logInserts_other.log',
+        '../setup/ansible/results/v105-v106/18/18-logInserts_latest.log',
+        '../setup/ansible/results/v105-v106/19/19-logInserts_other.log',
+        '../setup/ansible/results/v105-v106/19/19-logInserts_latest.log',
+        '../setup/ansible/results/v105-v106/20/20-logInserts_other.log',
+        '../setup/ansible/results/v105-v106/20/20-logInserts_latest.log',
+
+    ]
 
     df = load_and_clean_data(csv_file_paths)
     aggregated_data = df.groupby(['test_name', 'version']).agg(
