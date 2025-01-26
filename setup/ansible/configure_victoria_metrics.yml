@@ -19,5 +19,10 @@
           shell: |
             latest=$(docker images | grep {{ VICTORIA_METRICS_VERSION_LATEST }} | awk '{ print($3)}')
             other=$(docker images | grep {{ VICTORIA_METRICS_VERSION_OTHER }} | awk '{ print($3)}')
-            docker run -d -it --cpus=1 -m=4g --rm -v ./victoria-metrics-data -p 8428:8428 $latest -retentionPeriod=100y
-            docker run -d -it --cpus=1 -m=4g --rm -v ./victoria-metrics-data -p 8429:8428 $other -retentionPeriod=100y
+            docker run -d -it --cpus=1.5 -m=6g --rm -v ./victoria-metrics-data -p 8428:8428 $latest -retentionPeriod=100y
+            docker run -d -it --cpus=1.5 -m=6g --rm -v ./victoria-metrics-data -p 8429:8428 $other -retentionPeriod=100y
+
+        - name: log cpu usage in containers
+          shell: |
+            cd /home/benchUser
+            ./dockerStats.sh &

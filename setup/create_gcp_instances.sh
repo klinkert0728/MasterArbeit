@@ -42,7 +42,7 @@ gcloud compute instances create $MICRO_BENCHMARK_INSTANCE_NAME --project=$PROJEC
 gcloud compute instances add-metadata $MICRO_BENCHMARK_INSTANCE_NAME --zone=$CLOUDSDK_COMPUTE_ZONE --metadata-from-file ssh-keys="./id_rsa_formatted.pub"
 
 #create application benchmark instance sut
-gcloud compute instances create $APPLICATION_BENCHMARK_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-2 --create-disk=auto-delete=yes,size=50 --tags=vm-application-$run,http-server,https-server
+gcloud compute instances create $APPLICATION_BENCHMARK_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-4 --create-disk=auto-delete=yes,size=50 --boot-disk-type=pd-balanced --boot-disk-size=50GB --tags=vm-application-$run,http-server,https-server
 gcloud compute instances add-metadata $APPLICATION_BENCHMARK_INSTANCE_NAME --zone=$CLOUDSDK_COMPUTE_ZONE --metadata-from-file ssh-keys="./id_rsa_formatted.pub"
 
 # create application benchmark client

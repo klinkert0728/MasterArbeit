@@ -29,6 +29,9 @@ scp -i "./$keypair_file" -o StrictHostKeyChecking=no ./hosts_$run.yml $keypair_n
 scp -i "./$keypair_file" -o StrictHostKeyChecking=no ./setup/scripts/run_benchmark.sh $keypair_name@$VM_CONTROLLER_IP:~/
 scp -i "./$keypair_file" -o StrictHostKeyChecking=no ./bench_dk_id* $keypair_name@$VM_CONTROLLER_IP:~/
 
+# Copy dockerStats script to VM_APPLICATION_IP.
+ scp -i "./$keypair_file" -o StrictHostKeyChecking=no ./setup/scripts/dockerStats.sh $keypair_name@$VM_APPLICATION_IP:~/
+
 # Run the ansible playbook to configure the gcp instances.
 ansible-playbook -i hosts_$run.yml setup/ansible/configure_gcp_instances.yml --ssh-common-args='-o StrictHostKeyChecking=no'
 

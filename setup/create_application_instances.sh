@@ -28,7 +28,7 @@ export CLOUDSDK_COMPUTE_ZONE="${CLOUDSDK_COMPUTE_REGION}-b"
 
 echo "starting instances application benchmark..."
 #create application benchmark instance sut
-gcloud compute instances create $APPLICATION_BENCHMARK_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-2 --create-disk=auto-delete=yes,size=50 --tags=vm-application-$run,http-server,https-server
+gcloud compute instances create $APPLICATION_BENCHMARK_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-4 --create-disk=auto-delete=yes,size=50 --tags=vm-application-$run,http-server,https-server
 gcloud compute instances add-metadata $APPLICATION_BENCHMARK_INSTANCE_NAME --zone=$CLOUDSDK_COMPUTE_ZONE --metadata-from-file ssh-keys="./id_rsa_formatted.pub"
 
 # create application benchmark client
@@ -42,6 +42,8 @@ if [[ "$standalone" == "true" ]]; then
     VM_APPLICATION_IP=($(gcloud compute instances list --filter="tags.items=vm-application-$run" --format="value(EXTERNAL_IP)"  | tr '\n' ' '))
     VM_APPLICATION_CLIENT_IP=($(gcloud compute instances list --filter="tags.items=vm-application-client-$run" --format="value(EXTERNAL_IP)"  | tr '\n' ' '))
     scp -i "./$keypair_file" -o StrictHostKeyChecking=no ./setup/scripts/configure_tsbs.sh $keypair_name@$VM_APPLICATION_CLIENT_IP:~/
+    scp -i "./$keypair_file" -o StrictHostKeyChecking=no ./setup/scripts/dockerStats.sh $keypair_name@$VM_APPLICATION_IP:~/
+
     ./setup/configure_application_environment.sh $VM_APPLICATION_IP $VM_APPLICATION_CLIENT_IP $run
     ansible-playbook -i hosts_application_$run.yml setup/ansible/configure_gcp_instances.yml --ssh-common-args='-o StrictHostKeyChecking=no'
     echo "This script was run directly from the terminal."

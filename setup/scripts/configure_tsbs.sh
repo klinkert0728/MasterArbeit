@@ -44,7 +44,7 @@ mkdir -p $HOME/results
 loadData() {
     IP=$1
     VERSION=$2
-    tsbs_load_victoriametrics --urls="http://$IP/write" --workers=10 --batch-size=100 --file="$HOME/data.txt" --latencies-file=/home/benchUser/results/latenciesInserts_${VERSION}.csv 2>&1 | tee $HOME/results/logInserts_${VERSION}.log 
+    tsbs_load_victoriametrics --urls="http://$IP/write" --workers=10 --batch-size=75 --file="$HOME/data.txt" --latencies-file=/home/benchUser/results/latenciesInserts_${VERSION}.csv 2>&1 | tee $HOME/results/logInserts_${VERSION}.log 
 }
 
 # Start parallel data loading
@@ -73,8 +73,7 @@ runBenchmark() {
 		--urls="http://$IP" \
 		--latencies-file=/home/benchUser/results/latenciesQueries_${VERSION}.csv  \
 		--print-interval="500" \
-		--workers=10 | tee results/logQueries_${VERSION}.log
-
+		--workers=10 2>&1 | tee $HOME/results/logQueries_${VERSION}.log
 }
 
 runBenchmark $SUT_IP_AND_PORT_LATEST "latest" & 

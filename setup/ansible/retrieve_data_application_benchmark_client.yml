@@ -1,6 +1,6 @@
 ---
     - name: Collect data from application benchmark client
-      hosts: application_benchmark_client
+      hosts: application_benchmark_client, application_benchmark
       gather_facts: no
       remote_user: benchUser
       strategy: free

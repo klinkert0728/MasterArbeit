@@ -1,0 +1,15 @@
+After 500 queries with 10 workers:
+Interval query rate: 1.60 queries/sec	Overall query rate: 1.60 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:  2166.91ms, med:  6190.34ms, mean:  6197.93ms, max: 8619.52ms, stddev:   564.27ms, sum: 3099.0sec, count: 500
+all queries                                                        :
+min:  2166.91ms, med:  6190.34ms, mean:  6197.93ms, max: 8619.52ms, stddev:   564.27ms, sum: 3099.0sec, count: 500
+
+panic: non-200 statuscode received: 429; Body: remoteAddr: "34.78.49.214:51508"; requestURI: /api/v1/query_range?end=1730212017&query=avg%28avg_over_time%28%7B__name__%3D~%27cpu_%28usage_user%7Cusage_system%7Cusage_idle%7Cusage_nice%7Cusage_iowait%7Cusage_irq%7Cusage_softirq%7Cusage_steal%7Cusage_guest%7Cusage_guest_nice%29%27%7D%5B1h%5D%29%29+by+%28__name__%2C+hostname%29&start=1730168817&step=3600; couldn't start executing the request in 10.000 seconds, since -search.maxConcurrentRequests=2 concurrent requests are executed. Possible solutions: to reduce query load; to add more compute resources to the server; to increase -search.maxQueueDuration=10s; to increase -search.maxQueryDuration; to increase -search.maxConcurrentRequests
+	
+
+goroutine 23 [running]:
+github.com/loposkin/tsbs/pkg/query.(*BenchmarkRunner).processorHandler(0xc000218000, 0xc0000a49b0, 0xc0000cc3c0, 0xaed440, {0x8abcc8, 0xc0000ae1b0}, 0x0?)
+	/home/benchUser/go/pkg/mod/github.com/loposkin/tsbs@v0.0.0-20210618102248-e01a1e4a2728/pkg/query/benchmarker.go:199 +0x1c7
+created by github.com/loposkin/tsbs/pkg/query.(*BenchmarkRunner).Run in goroutine 1
+	/home/benchUser/go/pkg/mod/github.com/loposkin/tsbs@v0.0.0-20210618102248-e01a1e4a2728/pkg/query/benchmarker.go:159 +0x1e7
