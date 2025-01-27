@@ -1,21 +1,21 @@
 After 500 queries with 10 workers:
-Interval query rate: 2.27 queries/sec	Overall query rate: 2.27 queries/sec
+Interval query rate: 2.35 queries/sec	Overall query rate: 2.35 queries/sec
 VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
-min:  1122.56ms, med:  4395.01ms, mean:  4359.09ms, max: 5363.20ms, stddev:   414.82ms, sum: 2179.5sec, count: 500
+min:  1005.54ms, med:  4219.90ms, mean:  4208.77ms, max: 5552.64ms, stddev:   469.39ms, sum: 2104.4sec, count: 500
 all queries                                                        :
-min:  1122.56ms, med:  4395.01ms, mean:  4359.09ms, max: 5363.20ms, stddev:   414.82ms, sum: 2179.5sec, count: 500
+min:  1005.54ms, med:  4219.90ms, mean:  4208.77ms, max: 5552.64ms, stddev:   469.39ms, sum: 2104.4sec, count: 500
 
 After 1000 queries with 10 workers:
-Interval query rate: 2.31 queries/sec	Overall query rate: 2.29 queries/sec
+Interval query rate: 2.41 queries/sec	Overall query rate: 2.38 queries/sec
 VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
-min:  1122.56ms, med:  4350.98ms, mean:  4342.41ms, max: 5515.01ms, stddev:   390.16ms, sum: 4342.4sec, count: 1000
+min:  1005.54ms, med:  4189.06ms, mean:  4179.97ms, max: 5552.64ms, stddev:   430.78ms, sum: 4180.0sec, count: 1000
 all queries                                                        :
-min:  1122.56ms, med:  4350.98ms, mean:  4342.41ms, max: 5515.01ms, stddev:   390.16ms, sum: 4342.4sec, count: 1000
+min:  1005.54ms, med:  4189.06ms, mean:  4179.97ms, max: 5552.64ms, stddev:   430.78ms, sum: 4180.0sec, count: 1000
 
-Run complete after 1440 queries with 10 workers (Overall query rate 2.33 queries/sec):
+Run complete after 1440 queries with 10 workers (Overall query rate 2.40 queries/sec):
 VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
-min:  1122.56ms, med:  4293.38ms, mean:  4284.29ms, max: 5515.01ms, stddev:   398.57ms, sum: 6169.4sec, count: 1440
+min:  1005.54ms, med:  4161.28ms, mean:  4153.65ms, max: 5552.64ms, stddev:   440.38ms, sum: 5981.3sec, count: 1440
 all queries                                                        :
-min:  1122.56ms, med:  4293.38ms, mean:  4284.29ms, max: 5515.01ms, stddev:   398.57ms, sum: 6169.4sec, count: 1440
+min:  1005.54ms, med:  4161.28ms, mean:  4153.65ms, max: 5552.64ms, stddev:   440.38ms, sum: 5981.3sec, count: 1440
 Saving Response Latencies to /home/benchUser/results/latenciesQueries_other.csv
-wall clock time: 618.771195sec
+wall clock time: 599.553162sec
