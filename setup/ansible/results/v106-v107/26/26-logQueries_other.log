@@ -1,21 +1,126 @@
 After 500 queries with 10 workers:
-Interval query rate: 2.25 queries/sec	Overall query rate: 2.25 queries/sec
+Interval query rate: 2.82 queries/sec	Overall query rate: 2.82 queries/sec
 VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
-min:   805.25ms, med:  4410.88ms, mean:  4396.40ms, max: 5368.83ms, stddev:   454.49ms, sum: 2198.2sec, count: 500
+min:   810.50ms, med:  3536.51ms, mean:  3521.89ms, max: 4266.24ms, stddev:   328.08ms, sum: 1760.9sec, count: 500
 all queries                                                        :
-min:   805.25ms, med:  4410.88ms, mean:  4396.40ms, max: 5368.83ms, stddev:   454.49ms, sum: 2198.2sec, count: 500
+min:   810.50ms, med:  3536.51ms, mean:  3521.89ms, max: 4266.24ms, stddev:   328.08ms, sum: 1760.9sec, count: 500
 
 After 1000 queries with 10 workers:
-Interval query rate: 2.27 queries/sec	Overall query rate: 2.26 queries/sec
+Interval query rate: 2.85 queries/sec	Overall query rate: 2.83 queries/sec
 VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
-min:   805.25ms, med:  4408.57ms, mean:  4406.41ms, max: 5673.73ms, stddev:   414.53ms, sum: 4406.4sec, count: 1000
+min:   810.50ms, med:  3511.55ms, mean:  3517.33ms, max: 4266.24ms, stddev:   298.79ms, sum: 3517.3sec, count: 1000
 all queries                                                        :
-min:   805.25ms, med:  4408.57ms, mean:  4406.41ms, max: 5673.73ms, stddev:   414.53ms, sum: 4406.4sec, count: 1000
+min:   810.50ms, med:  3511.55ms, mean:  3517.33ms, max: 4266.24ms, stddev:   298.79ms, sum: 3517.3sec, count: 1000
 
-Run complete after 1440 queries with 10 workers (Overall query rate 2.32 queries/sec):
+After 1500 queries with 10 workers:
+Interval query rate: 2.87 queries/sec	Overall query rate: 2.84 queries/sec
 VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
-min:   805.25ms, med:  4294.14ms, mean:  4292.53ms, max: 5673.73ms, stddev:   432.34ms, sum: 6181.2sec, count: 1440
+min:   810.50ms, med:  3496.19ms, mean:  3506.60ms, max: 4266.24ms, stddev:   281.70ms, sum: 5259.9sec, count: 1500
 all queries                                                        :
-min:   805.25ms, med:  4294.14ms, mean:  4292.53ms, max: 5673.73ms, stddev:   432.34ms, sum: 6181.2sec, count: 1440
+min:   810.50ms, med:  3496.19ms, mean:  3506.60ms, max: 4266.24ms, stddev:   281.70ms, sum: 5259.9sec, count: 1500
+
+After 2000 queries with 10 workers:
+Interval query rate: 2.86 queries/sec	Overall query rate: 2.85 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   810.50ms, med:  3492.86ms, mean:  3503.77ms, max: 4266.24ms, stddev:   275.34ms, sum: 7007.5sec, count: 2000
+all queries                                                        :
+min:   810.50ms, med:  3492.86ms, mean:  3503.77ms, max: 4266.24ms, stddev:   275.34ms, sum: 7007.5sec, count: 2000
+
+After 2500 queries with 10 workers:
+Interval query rate: 2.85 queries/sec	Overall query rate: 2.85 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   810.50ms, med:  3497.09ms, mean:  3505.06ms, max: 4266.24ms, stddev:   269.49ms, sum: 8762.6sec, count: 2500
+all queries                                                        :
+min:   810.50ms, med:  3497.09ms, mean:  3505.06ms, max: 4266.24ms, stddev:   269.49ms, sum: 8762.6sec, count: 2500
+
+After 3000 queries with 10 workers:
+Interval query rate: 2.85 queries/sec	Overall query rate: 2.85 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   810.50ms, med:  3498.62ms, mean:  3504.89ms, max: 4266.24ms, stddev:   263.61ms, sum: 10514.7sec, count: 3000
+all queries                                                        :
+min:   810.50ms, med:  3498.62ms, mean:  3504.89ms, max: 4266.24ms, stddev:   263.61ms, sum: 10514.7sec, count: 3000
+
+After 3500 queries with 10 workers:
+Interval query rate: 2.83 queries/sec	Overall query rate: 2.84 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   810.50ms, med:  3501.70ms, mean:  3510.54ms, max: 4266.24ms, stddev:   261.36ms, sum: 12286.9sec, count: 3500
+all queries                                                        :
+min:   810.50ms, med:  3501.70ms, mean:  3510.54ms, max: 4266.24ms, stddev:   261.36ms, sum: 12286.9sec, count: 3500
+
+After 4000 queries with 10 workers:
+Interval query rate: 2.84 queries/sec	Overall query rate: 2.84 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   810.50ms, med:  3503.61ms, mean:  3512.10ms, max: 4438.53ms, stddev:   262.62ms, sum: 14048.4sec, count: 4000
+all queries                                                        :
+min:   810.50ms, med:  3503.61ms, mean:  3512.10ms, max: 4438.53ms, stddev:   262.62ms, sum: 14048.4sec, count: 4000
+
+After 4500 queries with 10 workers:
+Interval query rate: 2.87 queries/sec	Overall query rate: 2.85 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   810.50ms, med:  3501.57ms, mean:  3508.89ms, max: 4438.53ms, stddev:   260.03ms, sum: 15790.0sec, count: 4500
+all queries                                                        :
+min:   810.50ms, med:  3501.57ms, mean:  3508.89ms, max: 4438.53ms, stddev:   260.03ms, sum: 15790.0sec, count: 4500
+
+After 5000 queries with 10 workers:
+Interval query rate: 2.84 queries/sec	Overall query rate: 2.85 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   810.50ms, med:  3502.34ms, mean:  3510.10ms, max: 4438.53ms, stddev:   258.76ms, sum: 17550.5sec, count: 5000
+all queries                                                        :
+min:   810.50ms, med:  3502.34ms, mean:  3510.10ms, max: 4438.53ms, stddev:   258.76ms, sum: 17550.5sec, count: 5000
+
+After 5500 queries with 10 workers:
+Interval query rate: 2.86 queries/sec	Overall query rate: 2.85 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   810.50ms, med:  3499.52ms, mean:  3509.09ms, max: 4438.53ms, stddev:   259.44ms, sum: 19300.0sec, count: 5500
+all queries                                                        :
+min:   810.50ms, med:  3499.52ms, mean:  3509.09ms, max: 4438.53ms, stddev:   259.44ms, sum: 19300.0sec, count: 5500
+
+After 6000 queries with 10 workers:
+Interval query rate: 2.81 queries/sec	Overall query rate: 2.84 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   810.50ms, med:  3505.15ms, mean:  3512.95ms, max: 4438.53ms, stddev:   256.91ms, sum: 21077.7sec, count: 6000
+all queries                                                        :
+min:   810.50ms, med:  3505.15ms, mean:  3512.95ms, max: 4438.53ms, stddev:   256.91ms, sum: 21077.7sec, count: 6000
+
+After 6500 queries with 10 workers:
+Interval query rate: 2.82 queries/sec	Overall query rate: 2.84 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   810.50ms, med:  3507.84ms, mean:  3515.95ms, max: 4590.34ms, stddev:   255.03ms, sum: 22853.7sec, count: 6500
+all queries                                                        :
+min:   810.50ms, med:  3507.84ms, mean:  3515.95ms, max: 4590.34ms, stddev:   255.03ms, sum: 22853.7sec, count: 6500
+
+After 7000 queries with 10 workers:
+Interval query rate: 2.86 queries/sec	Overall query rate: 2.84 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   810.50ms, med:  3506.82ms, mean:  3514.92ms, max: 4590.34ms, stddev:   254.41ms, sum: 24604.4sec, count: 7000
+all queries                                                        :
+min:   810.50ms, med:  3506.82ms, mean:  3514.92ms, max: 4590.34ms, stddev:   254.41ms, sum: 24604.4sec, count: 7000
+
+After 7500 queries with 10 workers:
+Interval query rate: 2.85 queries/sec	Overall query rate: 2.84 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   810.50ms, med:  3506.43ms, mean:  3513.54ms, max: 4590.34ms, stddev:   252.86ms, sum: 26351.6sec, count: 7500
+all queries                                                        :
+min:   810.50ms, med:  3506.43ms, mean:  3513.54ms, max: 4590.34ms, stddev:   252.86ms, sum: 26351.6sec, count: 7500
+
+After 8000 queries with 10 workers:
+Interval query rate: 2.86 queries/sec	Overall query rate: 2.85 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   810.50ms, med:  3504.51ms, mean:  3512.77ms, max: 4590.34ms, stddev:   252.37ms, sum: 28102.1sec, count: 8000
+all queries                                                        :
+min:   810.50ms, med:  3504.51ms, mean:  3512.77ms, max: 4590.34ms, stddev:   252.37ms, sum: 28102.1sec, count: 8000
+
+After 8500 queries with 10 workers:
+Interval query rate: 2.86 queries/sec	Overall query rate: 2.85 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   810.50ms, med:  3502.85ms, mean:  3511.66ms, max: 4590.34ms, stddev:   251.94ms, sum: 29849.1sec, count: 8500
+all queries                                                        :
+min:   810.50ms, med:  3502.85ms, mean:  3511.66ms, max: 4590.34ms, stddev:   251.94ms, sum: 29849.1sec, count: 8500
+
+Run complete after 8640 queries with 10 workers (Overall query rate 2.84 queries/sec):
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   810.50ms, med:  3504.26ms, mean:  3513.19ms, max: 4590.34ms, stddev:   252.24ms, sum: 30353.9sec, count: 8640
+all queries                                                        :
+min:   810.50ms, med:  3504.26ms, mean:  3513.19ms, max: 4590.34ms, stddev:   252.24ms, sum: 30353.9sec, count: 8640
 Saving Response Latencies to /home/benchUser/results/latenciesQueries_other.csv
-wall clock time: 619.745077sec
+wall clock time: 3037.001106sec

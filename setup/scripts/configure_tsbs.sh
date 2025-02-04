@@ -36,7 +36,7 @@ tsbs_generate_data --use-case=devops --seed=123 --scale=800  --timestamp-start="
 
 # ### Generate Queries
 # # Keep in mind the timestamp start and end should be the same as the data generated.
-tsbs_generate_queries --use-case=devops --seed=123 --scale=800 --timestamp-start="2024-10-26T00:00:00Z" --timestamp-end="2024-10-31T00:00:00Z" --queries=1440 --query-type=double-groupby-all --format=victoriametrics > /home/benchUser/queries.txt
+tsbs_generate_queries --use-case=devops --seed=123 --scale=800 --timestamp-start="2024-10-26T00:00:00Z" --timestamp-end="2024-10-31T00:00:00Z" --queries=8640 --query-type=double-groupby-all --format=victoriametrics > /home/benchUser/queries.txt
 
 mkdir -p $HOME/results
 

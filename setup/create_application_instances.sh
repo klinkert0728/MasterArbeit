@@ -35,6 +35,12 @@ gcloud compute instances add-metadata $APPLICATION_BENCHMARK_INSTANCE_NAME --zon
 gcloud compute instances create $APPLICATION_BENCHMARK_CLIENT_INSTANCE_NAME --project=$PROJECT --image-family=debian-11 --zone=$CLOUDSDK_COMPUTE_ZONE --image-project=debian-cloud  --machine-type=e2-standard-8 --create-disk=auto-delete=yes,boot=yes,device-name=instance-20241102-174601,image=projects/debian-cloud/global/images/debian-12-bookworm-v20241009,mode=rw,size=50,type=pd-balanced --tags=vm-application-client-$run,http-server,https-server
 gcloud compute instances add-metadata $APPLICATION_BENCHMARK_CLIENT_INSTANCE_NAME --zone=$CLOUDSDK_COMPUTE_ZONE --metadata-from-file ssh-keys="./id_rsa_formatted.pub"
 
+# add firewall rules for SSH, ICMP, victoria-metrics for all VMs
+if [ $(gcloud compute firewall-rules list --filter="name~allow-victoria-metrics-firewall" | grep -c allow-victoria-metrics-firewall) -eq 0 ]; then
+    gcloud compute firewall-rules create "allow-victoria-metrics-firewall" --action=ALLOW --rules=icmp,tcp:22,tcp:8428,udp:8428,tcp:8429,udp:8429,tcp:80,tcp:8080 --source-ranges=0.0.0.0/0 --direction=INGRESS
+else
+    echo "Firewall rule already created"
+fi
 
 if [[ "$standalone" == "true" ]]; then
     # configure environment

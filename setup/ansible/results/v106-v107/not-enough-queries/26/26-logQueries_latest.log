@@ -1,0 +1,21 @@
+After 500 queries with 10 workers:
+Interval query rate: 2.98 queries/sec	Overall query rate: 2.98 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   757.15ms, med:  3315.20ms, mean:  3328.70ms, max: 4098.05ms, stddev:   316.34ms, sum: 1664.3sec, count: 500
+all queries                                                        :
+min:   757.15ms, med:  3315.20ms, mean:  3328.70ms, max: 4098.05ms, stddev:   316.34ms, sum: 1664.3sec, count: 500
+
+After 1000 queries with 10 workers:
+Interval query rate: 2.97 queries/sec	Overall query rate: 2.97 queries/sec
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   757.15ms, med:  3340.80ms, mean:  3348.40ms, max: 4155.01ms, stddev:   276.76ms, sum: 3348.4sec, count: 1000
+all queries                                                        :
+min:   757.15ms, med:  3340.80ms, mean:  3348.40ms, max: 4155.01ms, stddev:   276.76ms, sum: 3348.4sec, count: 1000
+
+Run complete after 1440 queries with 10 workers (Overall query rate 2.98 queries/sec):
+VictoriaMetrics mean of 10 metrics, all hosts, random 12h0m0s by 1h:
+min:   757.15ms, med:  3338.24ms, mean:  3345.71ms, max: 4155.01ms, stddev:   261.98ms, sum: 4817.8sec, count: 1440
+all queries                                                        :
+min:   757.15ms, med:  3338.24ms, mean:  3345.71ms, max: 4155.01ms, stddev:   261.98ms, sum: 4817.8sec, count: 1440
+Saving Response Latencies to /home/benchUser/results/latenciesQueries_latest.csv
+wall clock time: 483.203745sec
