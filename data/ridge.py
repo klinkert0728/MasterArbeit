@@ -9,7 +9,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 import re
 from sklearn.linear_model import Ridge
-from queriesPaths import getFilePaths, getPredictionFilePaths, getQueriesCSVFilePaths, getInsertsCSVFilePaths, getMicrobenchmarkFilePathsV104vsV105, getMicrobenchmarkFilePathsV105vsV106, getMicrobenchmarkFilePathsV106vsV107, getApplicationBenchmarkFilePathsV104vsV105, getApplicationBenchmarkFilePathsV105vsV106, getApplicationBenchmarkFilePathsV106vsV107
+from queriesPaths import getFilePaths, getPredictionFilePaths, getQueriesCSVFilePaths, getInsertsCSVFilePaths, getMicrobenchmarkFilePathsV104vsV105, getMicrobenchmarkFilePathsV105vsV106, getMicrobenchmarkFilePathsV106vsV107, getMicrobenchmarkFilePathsV107vsV108, getMicrobenchmarkFilePathsV108vsV109, getApplicationBenchmarkFilePathsV104vsV105, getApplicationBenchmarkFilePathsV105vsV106, getApplicationBenchmarkFilePathsV106vsV107, getApplicationBenchmarkFilePathsV107vsV108, getApplicationBenchmarkFilePathsV108vsV109
 from parse_queries_log import parse_queries_log
 
 
@@ -83,7 +83,7 @@ def load_and_clean_data(csv_file_paths):
     combined_df = pd.concat(dfs, ignore_index=True)
     return combined_df
 
-def remove_highly_correlated_features(X, threshold=0.8):
+def remove_highly_correlated_features(X, threshold=0.99):
     corr_matrix = X.corr().abs()
     upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
     to_drop = [column for column in upper.columns if any(upper[column] > threshold)]
@@ -162,7 +162,8 @@ def apply_ridge_regression_to_all(cleaned_df):
 
     # Define features (X) and target (y)
     # Assuming 'mean_latency' is the target variable and all other numeric columns are features
-    X = remove_perfectly_collinear_features(cleaned_df)
+    X = remove_highly_correlated_features(cleaned_df).drop(columns=['mean_latency'])
+    print(X.shape)
     y = cleaned_df['mean_latency']
 
     # Split the data into training and testing sets
@@ -262,14 +263,20 @@ def main():
     csv_files_v1 = getMicrobenchmarkFilePathsV104vsV105()
     csv_files_v2 = getMicrobenchmarkFilePathsV105vsV106()
     csv_files_v3 = getMicrobenchmarkFilePathsV106vsV107()
+    csv_files_v4 = getMicrobenchmarkFilePathsV107vsV108()
+    csv_files_v5 = getMicrobenchmarkFilePathsV108vsV109()
 
     df_v1 = load_and_clean_data(csv_files_v1)
     df_v2 = load_and_clean_data(csv_files_v2)
     df_v3 = load_and_clean_data(csv_files_v3)
+    df_v4 = load_and_clean_data(csv_files_v4)
+    df_v5 = load_and_clean_data(csv_files_v5)
 
     df_v1 = aggregate_data(df_v1).pivot_table(index="version", columns='test_name', values='mean_ms_op')
     df_v2 = aggregate_data(df_v2).pivot_table(index="version", columns='test_name', values='mean_ms_op')
     df_v3 = aggregate_data(df_v3).pivot_table(index="version", columns='test_name', values='mean_ms_op')
+    df_v4 = aggregate_data(df_v4).pivot_table(index="version", columns='test_name', values='mean_ms_op')
+    df_v5 = aggregate_data(df_v5).pivot_table(index="version", columns='test_name', values='mean_ms_op')
 
    # Create a DataFrame with the 'version' column
    
@@ -278,6 +285,8 @@ def main():
     df_v1["version_sut"] = "v104-v105"
     df_v2["version_sut"] = "v105-v106"
     df_v3["version_sut"] = "v106-v107"
+    df_v4["version_sut"] = "v107-v108"
+    df_v5["version_sut"] = "v108-v109"
 
     df_v1.to_csv('loadedData_v1.csv', index=False)
     df_v2.to_csv('loadedData_v2.csv', index=False)
@@ -294,24 +303,32 @@ def main():
     benchmark_df_v1 = parseLogsFromApplicationBenchmark(getApplicationBenchmarkFilePathsV104vsV105(), getQueriesCSVFilePaths())
     benchmark_df_v2 = parseLogsFromApplicationBenchmark(getApplicationBenchmarkFilePathsV105vsV106(), getQueriesCSVFilePaths())
     benchmark_df_v3 = parseLogsFromApplicationBenchmark(getApplicationBenchmarkFilePathsV106vsV107(), getQueriesCSVFilePaths())
+    benchmark_df_v4 = parseLogsFromApplicationBenchmark(getApplicationBenchmarkFilePathsV107vsV108(), getQueriesCSVFilePaths())
+    benchmark_df_v5 = parseLogsFromApplicationBenchmark(getApplicationBenchmarkFilePathsV108vsV109(), getQueriesCSVFilePaths())
 
     benchmark_df_v1["version_sut"] = "v104-v105"
     benchmark_df_v2["version_sut"] = "v105-v106"
     benchmark_df_v3["version_sut"] = "v106-v107"
+    benchmark_df_v4["version_sut"] = "v107-v108"
+    benchmark_df_v5["version_sut"] = "v108-v109"
     print(df_v1)
     print(benchmark_df_v1)
     merged_df_v1 = benchmark_df_v1.merge(df_v1, on=["version", "version_sut"])
     merged_df_v2 = benchmark_df_v2.merge(df_v2, on=["version", "version_sut"])
     merged_df_v3 = benchmark_df_v3.merge(df_v3, on=["version", "version_sut"])
-
+    merged_df_v4 = benchmark_df_v4.merge(df_v4, on=["version", "version_sut"])
+    merged_df_v5 = benchmark_df_v5.merge(df_v5, on=["version", "version_sut"])
 
     print(merged_df_v1)
     merged_df_v1.to_csv('output_merged_v4_v1.csv', index=False)
     merged_df_v2.to_csv('output_merged_v4_v2.csv', index=False)
     merged_df_v3.to_csv('output_merged_v4_v3.csv', index=False)
+    merged_df_v4.to_csv('output_merged_v4_v4.csv', index=False)
+    merged_df_v5.to_csv('output_merged_v4_v5.csv', index=False)
 
-    merged_df_v1 = pd.concat([merged_df_v1, merged_df_v2, merged_df_v3], ignore_index=True)
+    merged_df_v1 = pd.concat([merged_df_v1, merged_df_v2, merged_df_v3, merged_df_v4, merged_df_v5], ignore_index=True)
     nan_indexes = merged_df_v1[merged_df_v1.isna().any(axis=1)].index
+
     print("Indexes with NaN values:", nan_indexes.tolist())
     merged_df_v1 = merged_df_v1.fillna(0)
     merged_df_v1.to_csv('output_merged_v4.csv', index=False)
@@ -319,96 +336,6 @@ def main():
 
     ridge, scaler, trained_columns, mse = apply_ridge_regression_to_all(new_final_df)
     apply_ridge_to_new_data(ridge, scaler, trained_columns, mse)
-
-    # df_v1.to_csv('loadedData_v1.csv', index=False)
-    # aggregated_data_v1 = aggregate_data(df_v1).pivot_table(index=None, columns='test_name', values='mean_ms_op')
-
-    # aggregated_data_v1.to_csv('aggregatedData_v1.csv', index=False)
-    # aggregated_data_v1["version"] = "v104-v105"
-
-    # aggregated_data_v2 = aggregate_data(df_v2).pivot_table(index=None, columns='test_name', values='mean_ms_op')
-    # aggregated_data_v2["version"] = "v105-v106"
-    
-    # aggregated_data_v3 = aggregate_data(df_v3).pivot_table(index=None, columns='test_name', values='mean_ms_op')
-    # aggregated_data_v3["version"] = "v106-v107"
-
-    # # print(aggregated_data_v3)
-
-    # benchmark_df_v1 = parseLogsFromApplicationBenchmark(getApplicationBenchmarkFilePathsV104vsV105(), getQueriesCSVFilePaths())
-    # benchmark_df_v2 = parseLogsFromApplicationBenchmark(getApplicationBenchmarkFilePathsV105vsV106(), getQueriesCSVFilePaths())
-    # benchmark_df_v3 = parseLogsFromApplicationBenchmark(getApplicationBenchmarkFilePathsV106vsV107(), getQueriesCSVFilePaths())
-
-    # benchmark_df_v1["version"] = "v104-v105"
-    # benchmark_df_v2["version"] = "v105-v106"
-    # benchmark_df_v3["version"] = "v106-v107"
-
-    # merged_df_v1 = pd.concat([aggregated_data_v1, aggregated_data_v2], ignore_index=True)
-    # merged_df_v1 = pd.concat([merged_df_v1, aggregated_data_v3], ignore_index=True)
-    
-    # merged_df_v1 = merged_df_v1.fillna(0)
-    # merged_df_v1.to_csv('output_merged_v4.csv', index=False)
-
-    # mean_v1 = benchmark_df_v1["mean_latency"].mean(numeric_only=True)
-    # mean_v2 = benchmark_df_v2["mean_latency"].mean(numeric_only=True)
-    # mean_v3 = benchmark_df_v3["mean_latency"].mean(numeric_only=True)
-
-
-    # merged_df_v1.to_csv('output_merged_v5.csv', index=False)
-
-    # new_merged_df_v1 = merged_df_v1.merge(benchmark_df_v1, on='version')
-    # new_merged_df_v2 = merged_df_v1.merge(benchmark_df_v2, on='version')
-    # new_merged_df_v3 = merged_df_v1.merge(benchmark_df_v3, on='version')
-
-    # new_merged_df_v1.to_csv('output_merged_v6_v1.csv', index=False)
-    # new_merged_df_v2.to_csv('output_merged_v6_v2.csv', index=False)
-    # new_merged_df_v3.to_csv('output_merged_v6_v3.csv', index=False)
-
-    # new_final_df = pd.concat([new_merged_df_v1, new_merged_df_v2, new_merged_df_v3], ignore_index=True)
-
-    # new_final_df.to_csv('output_merged_v6.csv', index=False)
-    # new_final_df = new_final_df.drop(columns=["version"])
-
-    # ridge, scaler, trained_columns, mse = apply_ridge_regression_to_all(new_final_df)
-    # apply_ridge_to_new_data(ridge, scaler, trained_columns, mse)
-
-
-    # === new attempt
-
-    # print(merged_df_v2)
-    # latencies_queries_file_paths = getQueriesCSVFilePaths()
-    # latencies_inserts_file_paths = getInsertsCSVFilePaths()
-    
-    # app_benchmark_df = parseLogsFromApplicationBenchmark(latencies_inserts_file_paths, latencies_queries_file_paths)
-    # app_benchmark_mean = app_benchmark_df["mean_latency"].mean(numeric_only=True)
-    # print(app_benchmark_mean)
-    # pivoted_data["mean_latency"] = app_benchmark_mean
-    # print(pivoted_data)
-    # app_benchmark_df.to_csv('output_appb.csv', index=False)
-
-    # ridge, scaler, trained_columns, mse = apply_ridge_regression_to_all(pivoted_data)
-    # apply_ridge_regression_to_nonSeenData(ridge, scaler, trained_columns, mse)
-
-
-    # aggregated_data = df.groupby(['test_name', 'version']).agg(
-    #     mean_ms_op=('ms_op', 'mean'),
-    #     median_ms_op=('ms_op', 'median'),
-    #     std_ms_op=('ms_op', 'std')
-    # ).reset_index()
-
-    # pivoted_data = aggregated_data.pivot(index='version', columns='test_name', values='mean_ms_op').reset_index()
-    # pivoted_data.to_csv('output_piv.csv', index=False)
-
-    # latencies_queries_file_paths = getQueriesCSVFilePaths()
-    # latencies_inserts_file_paths = getInsertsCSVFilePaths()
-    # app_benchmark_df = parseLogsFromApplicationBenchmark(latencies_inserts_file_paths, latencies_queries_file_paths)
-
-    # app_benchmark_df.to_csv('output_appb.csv', index=False)
-
-    # final_data = pd.merge(pivoted_data, app_benchmark_df, on='version')
-    # final_data.to_csv('output.csv', index=False)
-    
-    # ridge, scaler, trained_columns, mse = apply_ridge_regression_to_all(final_data)
-    # apply_ridge_regression_to_nonSeenData(ridge, scaler, trained_columns, mse)
 
 if __name__ == "__main__":
     main()
