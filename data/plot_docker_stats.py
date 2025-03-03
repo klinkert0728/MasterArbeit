@@ -58,13 +58,13 @@ def plot_mean_latencies(log_file_query_paths):
 
         # Create a line plot
         plt.figure(figsize=(8, 4))
-        plt.plot(x_values, version_1_means, marker='o', linestyle='-', color='b', label='Values')
-        plt.plot(x_values, version_2_means, marker='s', linestyle='-', color='r', label='Values')
+        plt.plot(x_values, version_1_means, marker='o', linestyle='-', color='b', label=sut_version.split('-')[0])
+        plt.plot(x_values, version_2_means, marker='s', linestyle='-', color='r', label=sut_version.split('-')[1])
 
         # Add labels and title
         plt.xlabel('Data Point Index')
-        plt.ylabel('Value')
-        plt.title('Line Diagram of Values')
+        plt.ylabel('CPU Usage')
+        plt.title('Line Diagram of CPU Usage')
         plt.legend()
 
         # Save the plot

@@ -86,7 +86,29 @@ def load_and_clean_data(csv_file_paths):
 def remove_highly_correlated_features(X, threshold=0.99):
     corr_matrix = X.corr().abs()
     upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
-    to_drop = [column for column in upper.columns if any(upper[column] > threshold)]
+    
+    # Keep track of columns to drop and their correlations
+    to_drop = []
+    correlations = {}
+    
+    for column in upper.columns:
+        # Find features that are highly correlated with this column
+        high_corr = upper[column][upper[column] > threshold]
+        if len(high_corr) > 0:
+            to_drop.append(column)
+            # Store the correlated features and their correlation values
+            correlations[column] = high_corr.to_dict()
+    
+    # Print correlation information
+    if to_drop:
+        print(f"\nDropping {len(to_drop)} features due to high correlation (threshold={threshold}):")
+        for column in to_drop:
+            print(f"\n{column} is highly correlated with:")
+            for corr_col, corr_val in correlations[column].items():
+                print(f"  - {corr_col}: {corr_val:.3f}")
+    else:
+        print(f"\nNo features found with correlation above {threshold}")
+        
     return X.drop(columns=to_drop)
 
 def visualize_data(X, Y):

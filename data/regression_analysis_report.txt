@@ -1,0 +1,62 @@
+Regression Analysis Summary
+==========================
+
+Model Statistics:
+R-squared: 0.1558
+Adjusted R-squared: 0.0714
+F-statistic: 1.8456
+F-statistic p-value: 0.0707
+
+Number of significant features (p < 0.05): 347
+
+Top 10 Most Significant Features:
+
+Feature: BenchmarkFilterHasHit/maxItems=1000000-2_BenchmarkUnionNoOverlap/items_100000-2
+Standardized Coefficient: 0.000698
+P-Value: 0.0330
+95% Confidence Interval (standardized): [0.000057, 0.001338]
+
+Feature: BenchmarkFilterAdd/maxItems=1000000-2_BenchmarkUnionNoOverlap/items_100000-2
+Standardized Coefficient: 0.000690
+P-Value: 0.0289
+95% Confidence Interval (standardized): [0.000073, 0.001308]
+
+Feature: BenchmarkQueueThroughputConcurrent/block-size-1000000-2_BenchmarkUnionNoOverlap/items_100000-2
+Standardized Coefficient: 0.000675
+P-Value: 0.0574
+95% Confidence Interval (standardized): [-0.000022, 0.001372]
+
+Feature: BenchmarkPromInstantUnmarshal/Instant_std+fastjson-2_BenchmarkUnionNoOverlap/items_100000-2
+Standardized Coefficient: 0.000675
+P-Value: 0.0574
+95% Confidence Interval (standardized): [-0.000022, 0.001372]
+
+Feature: BenchmarkUnionNoOverlap/items_10000-2_BenchmarkUnionNoOverlap/items_100000-2
+Standardized Coefficient: 0.000674
+P-Value: 0.0551
+95% Confidence Interval (standardized): [-0.000015, 0.001362]
+
+Feature: BenchmarkMarshalUnmarshalMetricIDs/numMetricIDs-1000000-2_BenchmarkUnionNoOverlap/items_100000-2
+Standardized Coefficient: 0.000669
+P-Value: 0.0547
+95% Confidence Interval (standardized): [-0.000014, 0.001352]
+
+Feature: BenchmarkMarshalUnmarshalMetricIDs/numMetricIDs-100000-2_BenchmarkUnionNoOverlap/items_100000-2
+Standardized Coefficient: 0.000665
+P-Value: 0.0504
+95% Confidence Interval (standardized): [-0.000001, 0.001331]
+
+Feature: BenchmarkFilterAdd/maxItems=100000-2_BenchmarkUnionNoOverlap/items_100000-2
+Standardized Coefficient: 0.000665
+P-Value: 0.0314
+95% Confidence Interval (standardized): [0.000061, 0.001269]
+
+Feature: BenchmarkUnionNoOverlap/items_100000-2
+Standardized Coefficient: 0.000665
+P-Value: 0.0556
+95% Confidence Interval (standardized): [-0.000016, 0.001346]
+
+Feature: BenchmarkMapAddReuse/items_1000000-2_BenchmarkUnionNoOverlap/items_100000-2
+Standardized Coefficient: 0.000661
+P-Value: 0.0522
+95% Confidence Interval (standardized): [-0.000006, 0.001329]

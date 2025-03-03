@@ -60,8 +60,11 @@ def plot_mean_latencies(log_file_query_paths):
     # Prepare data for plotting
 
     sut_means = {}
+    sut_versions_colors = set()
     for sut_version in available_sut_versions:
         # Prepare data for plotting
+        sut_versions_colors.add(sut_version.split("-")[0])
+        sut_versions_colors.add(sut_version.split("-")[1])
         for runNumber, means in version_means.items():
             means = [entry for entry in means if entry['sut_version'] == sut_version]
             logInsertSummary = sut_means.get(sut_version, None)
@@ -72,22 +75,21 @@ def plot_mean_latencies(log_file_query_paths):
                 logInsertSummary.append(means)
                 sut_means[sut_version] = logInsertSummary
 
+    color_map = {'v106': (0.12156862745098039, 0.4666666666666667, 0.7058823529411765, 1.0), 'v104': (1.0, 0.4980392156862745, 0.054901960784313725, 1.0), 'v107': (0.17254901960784313, 0.6274509803921569, 0.17254901960784313, 1.0), 'v108': (0.8392156862745098, 0.15294117647058825, 0.1568627450980392, 1.0), 'v105': (0.5803921568627451, 0.403921568627451, 0.7411764705882353, 1.0), 'v109': (0.5490196078431373, 0.33725490196078434, 0.29411764705882354, 1.0)}
     for sut_version, means in sut_means.items():
-        print(sut_version)
-        print(means)
         run_numbers = list(range(len(means)))
         version_1_means = [next((entry['mean_latency'] for entry in means if entry['version'] == 1), 0) for means in means]
         version_2_means = [next((entry['mean_latency'] for entry in means if entry['version'] == 2), 0) for means in means]
 
         # Create a line plot with markers
         fig, ax = plt.subplots()
-        ax.plot(run_numbers, version_1_means, marker='o', linestyle='-', label=f'{sut_version.split("-")[0]}')
-        ax.plot(run_numbers, version_2_means, marker='s', linestyle='-', label=f'{sut_version.split("-")[1]}')
+        ax.plot(run_numbers, version_1_means, marker='o', linestyle='-', label=f'{sut_version.split("-")[0]}', color=color_map[sut_version.split("-")[0]])
+        ax.plot(run_numbers, version_2_means, marker='s', linestyle='-', label=f'{sut_version.split("-")[1]}', color=color_map[sut_version.split("-")[1]])
 
         # Add some text for labels, title and custom x-axis tick labels, etc.
         ax.set_xlabel('Run Number')
-        ax.set_ylabel('Mean Latency (ms)')
-        ax.set_title(f'Mean Latency by Version and Run for {sut_version}')
+        ax.set_ylabel('Mean Query rate (ms)')
+        # ax.set_title(f'Mean Latency by Version and Run for {sut_version}')
         ax.set_xticks(run_numbers)
         ax.set_xticklabels(run_numbers)
         ax.legend()
@@ -96,79 +98,8 @@ def plot_mean_latencies(log_file_query_paths):
         ax.grid(True)
 
         # Save the plot
-        plt.savefig(f'mean_latency_queries_all_runs-{sut_version}.png')
+        plt.savefig(f'mean_query_rate_all_runs-{sut_version}.png')
         plt.close()
-    
-    
-    # for sut_version, means in sut_means.items():
-    #     print(sut_version)
-    #     print(means)
-    #     run_numbers = list(range(len(means)))
-    #     version_1_means = [next((entry['mean_latency'] for entry in means if entry['version'] == 1), 0) for means in means]
-    #     version_2_means = [next((entry['mean_latency'] for entry in means if entry['version'] == 2), 0) for means in means]
-
-    #     # Create a grouped bar plot
-    #     x = np.arange(len(run_numbers))  # the label locations
-    #     width = 0.35  # the width of the bars
-
-    #     fig, ax = plt.subplots()
-    #     bars1 = fig.plot(x - width/2, version_1_means, width, label=f'{sut_version.split("-")[0]}')
-    #     bars2 = fig.plot(x + width/2, version_2_means, width, label=f'{sut_version.split("-")[1]}')
-
-    #     # Add some text for labels, title and custom x-axis tick labels, etc.
-    #     ax.set_xlabel('Run Number')
-    #     ax.set_ylabel('Mean Latency (ms)')
-    #     ax.set_title(f'Mean Latency by Version and Run for {sut_version}')
-    #     ax.set_xticks(x)
-    #     ax.set_xticklabels(run_numbers)
-    #     ax.legend()
-
-    #     # Add a grid
-    #     ax.grid(True)
-
-    #     # Save the plot
-    #     plt.savefig(f'mean_latency_queries_all_runs-{sut_version}.png')
-    #     plt.close()
-
-    # for runNumber, means in version_means.items():
-    #     # print(means)
-    #     run_numbers = list(version_means.keys())
-    #     version_1_means = [next((entry['mean_latency'] for entry in means if entry['version'] == 1), 0) for means in version_means.values()]
-    #     version_2_means = [next((entry['mean_latency'] for entry in means if entry['version'] == 2), 0) for means in version_means.values()]
-
-    #     # Create a grouped bar plot
-    #     x = np.arange(len(run_numbers))  # the label locations
-    #     width = 0.35  # the width of the bars
-
-    #     fig, ax = plt.subplots()
-    #     bars1 = ax.bar(x - width/2, version_1_means, width, label='Version 1')
-    #     bars2 = ax.bar(x + width/2, version_2_means, width, label='Version 2')
-
-    #     # Add some text for labels, title and custom x-axis tick labels, etc.
-    #     ax.set_xlabel('Run Number')
-    #     ax.set_ylabel('Mean Latency (ms)')
-    #     ax.set_title('Mean Latency by Version and Run')
-    #     ax.set_xticks(x)
-    #     ax.set_xticklabels(run_numbers)
-    #     ax.legend()
-
-    #     # Add a grid
-    #     ax.grid(True)
-
-    #     # Save the plot
-    #     plt.savefig(f'mean_latency_all_runs-{means[0]["sut_version"]}.png')
-    #     plt.close()
-    
-    # Plot average mean latency comparison between versions
-    # avg_means = {version: sum(means) / len(means) for version, means in version_means.items()}
-    # plt.figure()
-    # plt.bar(avg_means.keys(), avg_means.values())
-    # plt.title('Average Mean Latency Comparison Between Versions')
-    # plt.xlabel('Version')
-    # plt.ylabel('Average Mean Latency (ms)')
-    # plt.grid(True)
-    # plt.savefig('average_mean_latency_comparison.png')
-    # plt.close()
 
 if __name__ == "__main__":
     # Example log_file_paths, replace with actual paths from queriesPaths.py

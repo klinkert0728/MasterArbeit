@@ -11,7 +11,7 @@ keypair_file="bench_dk_id_rsa"
 keypair_name="benchUser"
 
 # GoogleCloud project
-PROJECT=master-437610
+PROJECT=master-daniel-449615
 
 APPLICATION_BENCHMARK_INSTANCE_NAME=application-sut-experiment-$run
 

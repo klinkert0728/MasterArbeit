@@ -6,7 +6,7 @@ set -euo pipefail
 run=$1 # determines the experiment run number
 
 # GoogleCloud project
-PROJECT=master-437610
+PROJECT=master-daniel-449615
 
 # set the primary name
 MICRO_BENCHMARK_INSTANCE_NAME=micro-sut-experiment-$run
