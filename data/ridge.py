@@ -141,7 +141,7 @@ def apply_ridge_regression_to_nonSeenData(ridge, scaler, trained_columns, mse):
     ).reset_index()
 
     pivoted_data = aggregated_data.pivot(index='version', columns='test_name', values='mean_ms_op').reset_index()
-    pivoted_data.to_csv('output_piv2.csv', index=False)
+    pivoted_data.to_csv('validation/output_piv2.csv', index=False)
 
     final_data = pivoted_data
     # Ensure the DataFrame is not empty
@@ -256,7 +256,7 @@ def apply_ridge_to_new_data(ridge, scaler, trained_columns, mse):
     df_v1 = load_and_clean_data(csv_files_v1)
     df_v1 = aggregate_data(df_v1).pivot_table(index="version", columns='test_name', values='mean_ms_op')
     df_v1 = df_v1.fillna(0)
-    df_v1.to_csv('predicted_data.csv', index=False)
+    df_v1.to_csv('validation/predicted_data.csv', index=False)
     missing_cols = list(set(trained_columns) - set(df_v1.columns))
 
     missing_df = pd.DataFrame(0, index=df_v1.index, columns=missing_cols)
@@ -310,9 +310,11 @@ def main():
     df_v4["version_sut"] = "v107-v108"
     df_v5["version_sut"] = "v108-v109"
 
-    df_v1.to_csv('loadedData_v1.csv', index=False)
-    df_v2.to_csv('loadedData_v2.csv', index=False)
-    df_v3.to_csv('loadedData_v3.csv', index=False)
+    df_v1.to_csv('validation/loadedData_v1.csv', index=False)
+    df_v2.to_csv('validation/loadedData_v2.csv', index=False)
+    df_v3.to_csv('validation/loadedData_v3.csv', index=False)
+    df_v4.to_csv('validation/loadedData_v4.csv', index=False)
+    df_v5.to_csv('validation/loadedData_v5.csv', index=False)
 
     df_v1 = df_v1.dropna(axis=1)
     df_v2 = df_v2.dropna(axis=1)
@@ -333,27 +335,26 @@ def main():
     benchmark_df_v3["version_sut"] = "v106-v107"
     benchmark_df_v4["version_sut"] = "v107-v108"
     benchmark_df_v5["version_sut"] = "v108-v109"
-    print(df_v1)
-    print(benchmark_df_v1)
+
     merged_df_v1 = benchmark_df_v1.merge(df_v1, on=["version", "version_sut"])
     merged_df_v2 = benchmark_df_v2.merge(df_v2, on=["version", "version_sut"])
     merged_df_v3 = benchmark_df_v3.merge(df_v3, on=["version", "version_sut"])
     merged_df_v4 = benchmark_df_v4.merge(df_v4, on=["version", "version_sut"])
     merged_df_v5 = benchmark_df_v5.merge(df_v5, on=["version", "version_sut"])
 
-    print(merged_df_v1)
-    merged_df_v1.to_csv('output_merged_v4_v1.csv', index=False)
-    merged_df_v2.to_csv('output_merged_v4_v2.csv', index=False)
-    merged_df_v3.to_csv('output_merged_v4_v3.csv', index=False)
-    merged_df_v4.to_csv('output_merged_v4_v4.csv', index=False)
-    merged_df_v5.to_csv('output_merged_v4_v5.csv', index=False)
+    
+    merged_df_v1.to_csv('validation/output_merged_v4_v1.csv', index=False)
+    merged_df_v2.to_csv('validation/output_merged_v4_v2.csv', index=False)
+    merged_df_v3.to_csv('validation/output_merged_v4_v3.csv', index=False)
+    merged_df_v4.to_csv('validation/output_merged_v4_v4.csv', index=False)
+    merged_df_v5.to_csv('validation/output_merged_v4_v5.csv', index=False)
 
     merged_df_v1 = pd.concat([merged_df_v1, merged_df_v2, merged_df_v3, merged_df_v4, merged_df_v5], ignore_index=True)
     nan_indexes = merged_df_v1[merged_df_v1.isna().any(axis=1)].index
 
     print("Indexes with NaN values:", nan_indexes.tolist())
     merged_df_v1 = merged_df_v1.fillna(0)
-    merged_df_v1.to_csv('output_merged_v4.csv', index=False)
+    merged_df_v1.to_csv('validation/output_merged_v4.csv', index=False)
     new_final_df = merged_df_v1.drop(columns=["version", "version_sut"])
 
     ridge, scaler, trained_columns, mse = apply_ridge_regression_to_all(new_final_df)

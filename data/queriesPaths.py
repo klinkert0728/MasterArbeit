@@ -1,16 +1,16 @@
 def getPredictionFilePaths():
     csv_file_paths = [
-        '../setup/ansible/results/31-newVersion/microbenchmark.csv',
+        '../setup/ansible/results/51/microbenchmark.csv',
     ]
 
     log_file_paths = [
-        '../setup/ansible/results/31-newVersion/latenciesInserts_other.csv',
-        '../setup/ansible/results/31-newVersion/latenciesInserts_latest.csv',
+        '../setup/ansible/results/51/latenciesInserts_other.csv',
+        '../setup/ansible/results/51/latenciesInserts_latest.csv',
     ]
 
     query_log_file_paths = [
-        '../setup/ansible/results/31-newVersion/latenciesQueries_other.csv',
-        '../setup/ansible/results/31-newVersion/latenciesQueries_latest.csv'
+        '../setup/ansible/results/51/latenciesQueries_other.csv',
+        '../setup/ansible/results/51/latenciesQueries_latest.csv'
     ]
 
     return csv_file_paths, log_file_paths, query_log_file_paths
