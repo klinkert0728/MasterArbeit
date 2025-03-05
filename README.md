@@ -63,6 +63,14 @@ After instance creation, the script automatically:
    - Ansible playbooks to Controller
    - Docker stats script to Application Benchmark instance
 
+Important: Before running the setup, configure the Victoria Metrics versions you want to benchmark in `setup/ansible/host_template.yml`:
+```yaml
+vars:
+    VICTORIA_METRICS_VERSION_OTHER: v1.108.0  # Version to compare against
+    VICTORIA_METRICS_VERSION_LATEST: v1.109.0 # Latest version
+```
+These versions will be used to pull the appropriate Docker images and run the benchmarks.
+
 ### 3. Instance Configuration via Ansible
 
 The setup runs several Ansible playbooks that configure:
