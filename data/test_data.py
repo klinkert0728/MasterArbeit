@@ -47,28 +47,14 @@ def test_feature_selection(X, y):
         print(f"Threshold: {threshold}, Features: {len(selected_features)}, RMSE: {rmse}, R²: {r2}")
         results.append((threshold, len(selected_features), rmse, r2))
 
-    # Convert results to a readable format
+    # Convert results to a readable format and save to CSV
     print("Threshold | Features | RMSE | R²")
+    results_df = pd.DataFrame(results, columns=['Threshold', 'Features', 'RMSE', 'R2'])
+    results_df.to_csv('feature_selection_results.csv', index=False)
+    
     for threshold, num_features, rmse, r2 in results:
         print(f"{threshold:.10f} | {num_features} | {rmse:.4f} | {r2:.4f} |")
         
-    if len(results) > 0:
-        thresholds, num_features, rmses, r2_scores = zip(*results)
-        fig, ax1 = plt.subplots()
-
-        ax1.set_xlabel("Coefficient Threshold")
-        ax1.set_ylabel("RMSE", color='tab:red')
-        ax1.plot(thresholds, rmses, 'ro-', label="RMSE")
-        ax1.tick_params(axis='y', labelcolor='tab:red')
-
-        ax2 = ax1.twinx()
-        ax2.set_ylabel("R² Score", color='tab:blue')
-        ax2.plot(thresholds, r2_scores, 'bo-', label="R² Score")
-        ax2.tick_params(axis='y', labelcolor='tab:blue')
-
-        plt.title("Effect of Feature Selection on Ridge Regression Performance")
-        plt.show()
-
 
 def aggregate_data(df):
      return df.groupby(['test_name', 'version']).agg(
