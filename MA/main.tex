@@ -1,0 +1,142 @@
+% This thesis template is based on the personal template of Felix Moebius. Thanks, Felix!
+% It has been extended and modified by Tobias Pfandzelter at the Scalable Software Systems group of TU Berlin.
+% It is licensed under the terms of the MIT license, meaning you are free to use it however you see fit but we accept no liability.
+% Good luck writing your thesis!
+
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fix-cm}
+
+\usepackage[a4paper, margin=3cm]{geometry}
+\usepackage[titletoc, title]{appendix}
+
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage[all]{nowidow}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{acronym}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{titlesec}
+\usepackage{csquotes}
+\usepackage{amsmath}
+
+\usepackage{transparent}
+\usepackage{eso-pic}
+\usepackage[section]{placeins}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{subcaption}
+
+
+%\renewcommand\thefigure{\thesection.\arabic{figure}} % Figures numbered as 5.1, 5.2, ...
+%\renewcommand\thesubfigure{.\arabic{subfigure}} % Subfigures numbered as 1, 2, 3...
+%\captionsetup[figure]{labelformat=simple, labelsep=period} % Ensures "5.1.1. Caption"
+%\renewcommand\thefigure{%
+%\thesection.\arabic{figure}}
+%\renewcommand\thesubfigure{%
+%\thesection.\arabic{figure}.\arabic{subfigure}}
+\renewcommand\thetable{%
+\thesection.\arabic{table}}
+
+\usepackage[main=english, ngerman]{babel}
+
+% we use the cleveref package to refer to figures, sections, etc.
+% instead of "Figure~\ref{fig:example}", write only "\cref{fig:example}" and the word "Figure" (or table, etc) will be inserted normally
+\usepackage[noabbrev,capitalise]{cleveref}
+
+\usepackage[
+    maxbibnames=99,
+    style=numeric,
+    url=false,
+    backend=bibtex8,
+    sortcites=true,
+]{biblatex}
+\addbibresource{refs.bib}
+\DeclareFieldFormat[online]{urldate}{Last accessed: #1}
+\DeclareFieldFormat{eprint}{arXiv: \href{https://arxiv.org/abs/#1}{#1}}
+\DeclareFieldFormat[report]{title}{``#1''}
+
+
+\newcommand{\projectTitle}{Performance Prediction in Application Benchmarks using Microbenchmarks}
+\newcommand{\thesisType}{Master's Thesis}
+\newcommand{\authors}{Daniel Klinkert Houfer}
+\newcommand{\matrikel}{451761}
+\newcommand{\authorEmail}{\href{mailto:daniel.klinkerthoufer@campus.tu-berlin.de}{daniel.klinkerthoufer@campus.tu-berlin.de}}
+\newcommand{\examinera}{Prof.~Dr.-Ing.~David Bermbach}
+\newcommand{\examinerb}{Prof.~Dr.~habil.~Odej Kao}
+\newcommand{\supervisor}{Nils Japke}
+
+\newcommand{\projectYear}{2025}
+\newcommand{\facultyName}{Fakultät Elektrotechnik und Informatik}
+\newcommand{\departmentName}{Fachgebiet Scalable Software Systems}
+
+\begin{document}
+\input{front.tex}
+
+\newpage
+
+\section*{Abstract}
+
+Performance testing is gaining more focus in modern software development nowadays, ensuring that applications meet efficiency and scalability goals. There are two standard practices: application benchmarks and microbenchmarks. Application benchmarks test an entire application under realistic conditions and require substantial time and resources. On the other hand, microbenchmarks measure the performance of specific functions or components. This thesis investigates how microbenchmark results can accurately predict or correlate with full-scale application performance in a cloud environment.
+Using VictoriaMetrics as the system under test \ac{SUT}, we conducted application benchmarks using the Time Series Benchmark Suite \ac{TSBS} and microbenchmarks with an adapted \ac{GoAbs} framework. To mitigate noise from shared cloud resources, we applied techniques such as duet benchmarking for application tests and Randomized Multiple Interleaved Trials \ac{RMIT} for microbenchmarks. Through a ridge regression model we then examined whether microbechmarks execution times could be linked to application-level latencies, assessing whether isolated function performance changes reliably reflect end-to-end behavior. Our findings show that microbenchmarks provide valuable insights into function-specific performance. However, their direct predictive power over application benchmarks remains limited—especially under a purely linear modeling approach and high collinearity among the microbenchmark functions. This research concludes that without more advanced modeling or supplementary validation, microbenchmarks alone may not sufficiently be able to predict performance improvements or regressions on the application benchmark level. Therefore, improvements and further work for benchmarking practices are discussed, including expanded feature selection techniques and non-mean metrics, and directions for future research into correlating micro- and application-level performance are proposed.
+
+
+% GERMAN
+\clearpage
+\begin{otherlanguage}
+    {ngerman}
+    \section*{Kurzfassung}
+    In der modernen Softwareentwicklung spielt Performance Testing eine zunehmend zentrale Rolle, dabei soll sichergestellt werden, dass Anwendungen die Anforderungen an Effizienz und Skalierbarkeit erfüllen. Dafür kommen vor allem zwei Methoden zum Einsatz: Application Benchmarks, bei denen ein gesamtes System unter realitätsnahen Bedingungen getestet wird und die daher umfangreiche Zeit und Ressourcen beanspruchen, sowie Microbenchmarks, die gezielt die Performance einzelner Funktionen oder Komponenten untersuchen.
+    Diese Masterarbeit geht der Frage nach, inwieweit sich aus Microbenchmark-Ergebnissen belastbare Vorhersagen über die Gesamtleistung einer Anwendung in einer Cloud-Umgebung ableiten lassen. Hierzu wird VictoriaMetrics als System under Test \ac{SUT} verwendet, haben wir application benchmarks mit der Time Series Benchmark Suite \ac{TSBS} durchgeführt. Parallel haben wir Microbenchmarks mit einem angepassten \ac{GoAbs} Framework ausgeführt. Um störende Einflüsse geteilte Cloud-Ressourcen zu reduzieren, kam dabei Duet-Benchmarking (für die Anwendungstests) und Randomized Multiple Interleaved Trials \ac{RMIT} (für die Microbenchmarks) zum Einsatz. Anschließend wurden die Ausführungszeiten der Microbenchmarks mittels Ridge-Regression mit den Latenzen auf Anwendungs-Ebene vergleichen, ob sich Veränderungen in der Leistung einzelner Funktionen zuverlässig auf das Gesamtsystem übertragen lassen. Unsere Resultate zeigen, dass Microbenchmarks zwar wertvolle Einblicke in die Leistungsfähigkeit spezifischer Funktionsbereiche liefern, ihre direkte Vorhersagekraft für vollständige Anwendungs-Benchmarks jedoch begrenzt ist—insbesondere bei rein linearen Modellierungsansätzen und hoher Korrelation zwischen den einzelnen Microbenchmark-Funktionen. Wir schließen daraus, dass Microbenchmarks ohne weiterführende Modellierung oder ergänzende Validierung nur eingeschränkt in der Lage sind, Verbesserungen oder Verschlechterungen auf Anwendungsebene präzise vorherzusagen. Deshalb werden mögliche Verbesserungsmaßnahmen diskutiert, darunter erweiterte Verfahren zur Merkmalsauswahl, sowie nicht-lineare Metriken. Abschließend werden Perspektiven für künftige Forschung aufgezeigt, die darauf abzielen, das Zusammenspiel von Micro- und Anwendungs-Performance noch fundierter zu erschließen.
+\end{otherlanguage}
+
+\clearpage
+\tableofcontents
+\clearpage
+\listoffigures
+
+\clearpage
+\listoftables
+
+\clearpage
+\section*{Abbreviations}
+\begin{acronym}
+    \acro{SUT}[SUT]{System under test}
+    \acro{TSBS}[TSBS]{Time Series Benchmark Suites}
+    \acro{GoAbs}[GoAbs]{Go API Benchmarking Score}
+    \acro{RMIT}[RMIT]{Randomized multiple interleaved trials}
+    \acro{CI}[CI]{Continuous integration}
+    \acro{CD}[CD]{Continuous deployment}
+    \acro{VM}[VM]{Virtual Machine}
+    \acro{ms}[ms]{Milliseconds}
+    \acro{MSE}[MSE]{Mean Squared Error}
+    \acro{VIF}[VIF]{Variance Inflation Factor}
+    \acro{PCA}[PCA]{Principal Component Analysis}
+    \acro{TCP}[TCP]{Test Case Prioritization}
+    \acro{API}[API]{Application Programming Interface}
+    \acro{I/O}[I/O]{Inpout/Output}
+    \acro{CPU}[CPU]{Central processing unit}
+    \acro{RAM}[RAM]{Random access memory}
+\end{acronym}
+
+\clearpage
+\include{chapters/01_introduction.tex}
+\clearpage
+\include{chapters/02_background.tex}
+\clearpage
+\include{chapters/03_studyDesign.tex}
+\clearpage
+\include{chapters/04_evaluation.tex}
+\clearpage
+\include{chapters/05_discussion.tex}
+\clearpage
+\include{chapters/06_relatedWork.tex}
+\clearpage
+\include{chapters/07_conclusion.tex}
+\clearpage
+\printbibliography
+\end{document}
